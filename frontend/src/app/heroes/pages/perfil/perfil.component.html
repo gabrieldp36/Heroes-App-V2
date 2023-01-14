@@ -1,0 +1,187 @@
+
+<div class="container animate__animated animate__fadeIn animate__slower">
+    <div class="encabezadoPerfilUsuario">        
+        <div class="divInfoUsario">
+            <div class="divUserIMG">
+                <div style="background-image: url({{imagenPerfil}})" class="userIMG"></div>
+            </div>
+            <div>
+                <h1 class="nombrePerfil">{{usuario.nombre}}</h1>
+                <p class="textoFechaIngreso">¡Bienvenido a tu perfil!</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <form 
+          autocomplete="nope" 
+          [formGroup]="miFormulario"
+          (ngSubmit)="actualizarUsuario()"
+        >
+            <div class="row rowInputs">
+
+                <div class="col-lg-5 col-md-9 col-sm-12">
+
+                    <!-- Input Nombre -->
+                    <div class="divInputsRegistro">
+                        <label class="col-form-label text-white labelFormRegistro"> Nombre </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control inputsForm inputBorder" 
+                                formControlName="nombre" autocomplete="nope"
+                            >
+                            <div class="input-group-prepend inputsForm inputPassword">
+                                <span class="input-group-text inputsForm">
+                                    <img 
+                                        *ngIf="validatorService.validarCampos( miFormulario, 'nombre', 'required')
+                                                || validatorService.validarCampos( miFormulario, 'nombre', 'pattern')"
+                                        src="../../../../assets/images/iconWarning.png" alt="" class="iconInputError"
+                                    >
+                                </span> 
+                            </div> 
+                        </div>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'nombre', 'required')"
+                            class="spanError"
+                        >
+                            El campo es obligatorio
+                        </span>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'nombre', 'pattern')"
+                            class=" spanError"
+                        >
+                            Ingrese un nombre y apellido válido
+                        </span>
+                    </div>
+
+                    <!-- Input Foto Perfil -->
+                    <div class="divInputsRegistro">
+                        <label class="col-form-label text-white labelFormRegistro"> Foto Perfil Url</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control inputsForm inputBorder" 
+                                formControlName="url_foto" autocomplete="nope"
+                            >
+                            <div class="input-group-prepend inputsForm inputPassword">
+                                <span class="input-group-text inputsForm"></span> 
+                            </div> 
+                        </div>
+                    </div>
+
+                    <!-- Input Email -->
+                    <div class="divInputsRegistro">
+                        <label class="col-form-label text-white labelFormRegistro"> Correo </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control inputsForm inputBorder" 
+                                formControlName="correo" autocomplete="nope"
+                            >
+                            <div class="input-group-prepend inputsForm inputPassword">
+                                <span class="input-group-text inputsForm">
+                                    <img 
+                                        *ngIf="validatorService.validarCampos( miFormulario, 'correo', 'required')
+                                                || validatorService.validarCampos( miFormulario, 'correo', 'pattern')"
+                                        src="../../../../assets/images/iconWarning.png" alt="" class="iconInputError"
+                                    >
+                                </span> 
+                            </div> 
+                        </div>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'correo', 'required')"
+                            class="spanError"
+                        >
+                            El campo es obligatorio
+                        </span>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'correo', 'pattern')"
+                            class="spanError"
+                        >
+                            Ingrese un correo válido
+                        </span>
+                    </div>
+
+                    <!-- Input Contraseña -->
+                    <div class="divInputsRegistro">
+                        <label class="col-form-label text-white labelFormRegistro"> Contraseña </label>
+                        <div class="input-group">
+                            <input [type]="typeInputPassword1" class="form-control inputsForm inputBorder"
+                                formControlName="password" autocomplete="nope"
+                            >
+                            <div class="input-group-prepend inputsForm inputPassword">
+                                <span class="input-group-text inputsForm">
+                                    <img 
+                                        *ngIf="validatorService.validarCampos( miFormulario, 'password', 'required')
+                                                || validatorService.validarCampos( miFormulario, 'password', 'pattern')"
+                                        src="../../../../assets/images/iconWarning.png" alt="" class="iconInputError"
+                                    >
+                                    <button class="btnEye marginBtnEye" type="button" (click)="mostrarContrasena()"></button>
+                                </span> 
+                            </div> 
+                        </div>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'password', 'pattern')"
+                            class="spanError"
+                        >
+                            La contraseña debe contener mínimo 8 caractéres, 
+                            al menos una letra mayúscula, una letra minúscula y un número.
+                        </span>
+                    </div>
+
+                    <!-- Input Confirmar Contraseña -->
+                    <div class="divInputsRegistro">
+                        <label class="col-form-label text-white labelFormRegistro"> Confirmar contraseña </label>
+                        <div class="input-group">
+                            <input 
+                                [type]="typeInputPassword2" 
+                                class="form-control inputsForm inputBorder" 
+                                formControlName="password2"
+                                autocomplete="nope"
+                            >
+                            <div class="input-group-prepend inputsForm inputPassword">
+                                <span class="input-group-text inputsForm">
+                                    <img 
+                                        *ngIf="validatorService.validarCampos( miFormulario, 'password2', 'noIguales')"
+                                        src="../../../../assets/images/iconWarning.png" alt="" class="iconInputError"
+                                    >
+                                    <button class="btnEye marginBtnEye" type="button" (click)="mostrarContrasena2()"></button>
+                                </span> 
+                            </div> 
+                        </div>
+                        <span 
+                            *ngIf="validatorService.validarCampos( miFormulario, 'password2', 'noIguales')"
+                            class="spanError"
+                        >
+                            Las contraseñas deben ser iguales
+                        </span>
+                    </div>
+
+                    <div class="divBtnLogin text-center">
+                        <button class="btn btn-outline-dark btnGuardarCambios" 
+                                type="submit" 
+                                [disabled]="miFormulario.invalid">
+                            <span> Actulizar Perfil </span>
+                        </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="divInputsSeguridad divEliminarCuenta">
+                        <h2 class="h2EliminarCuenta">Eliminar cuenta</h2> 
+                        <p class="font15">
+                            <strong class="spanError font15">¡Atención!</strong> 
+                            Si eliminas tu cuenta, ya no podrás iniciar sesión con ella.
+                            Ante cualquier inquietud consulta con un administrador.
+                        </p>
+                        <div class="divBTNEliminarCuenta text-center">
+                            <button 
+                                class="btn btn-outline-dark btnEliminarCuenta" 
+                                type="button" 
+                                (click)="eliminarUsuario()"
+                            >
+                                Eliminar
+                            
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

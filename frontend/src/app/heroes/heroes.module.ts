@@ -29,7 +29,9 @@ import { RellenarCamposComponent } from './components/rellenar-campos/rellenar-c
 import { ImagenPipe } from './pipes/imagen.pipe';
 
 import { PerfilComponent } from './pages/perfil/perfil.component';
+
 import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eliminar.component';
+import { PropiosComponent } from './pages/propios/propios.component';
 
 @NgModule({
 
@@ -44,7 +46,8 @@ import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eli
     ConfirmarComponent,
     RellenarCamposComponent,
     PerfilComponent,
-    DialogEliminarComponent
+    DialogEliminarComponent,
+    PropiosComponent
   ],
   imports: [
     CommonModule,

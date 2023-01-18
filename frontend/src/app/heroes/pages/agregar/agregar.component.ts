@@ -10,6 +10,8 @@ import { switchMap } from 'rxjs/operators';
 
 import { of } from 'rxjs';
 
+import { AuthService } from '../../../auth/services/auth.service';
+
 import { HeroesService } from '../../services/heroes.service';
 
 import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
@@ -24,7 +26,6 @@ import { Publisher, Publishers, Heroe } from '../../interfaces/heroes.interfaces
   styles: [
     `
       img {
-
         width: 400px;
         max-width: 100%;
         border-radius: 20px;
@@ -58,27 +59,30 @@ export class AgregarComponent implements OnInit {
     habilities: '',
     alt_img: '',
     assets_img: false,
-    usuario: 0,
+    id_usuario: 0,
   };
 
   constructor(
+    private authService: AuthService,
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private snakBar: MatSnackBar,
     private dialog: MatDialog,
-
   ) {};
 
   ngOnInit(): void {
-    if ( !this.router.url.includes('editar') ) { return; };
-    this.activatedRoute.params
-    .pipe( switchMap ( ({id})  => this.heroesService.getHeroesPorId(id) ) )
-    .subscribe( 
-      (heroe) => {
-        this.heroe = heroe
-      },
-    );
+    if ( !this.router.url.includes('editar') ) { 
+      this.heroesService.obtenerUsuarioActualizado().subscribe();
+    } else {
+      this.activatedRoute.params
+      .pipe( switchMap ( ({id})  => this.heroesService.getHeroesPorId(id) ) )
+      .subscribe( 
+        (heroe) => {
+          this.heroe = heroe
+        },
+      );
+    };
   };
 
   buscar(): void {
@@ -99,10 +103,9 @@ export class AgregarComponent implements OnInit {
       .subscribe( heroe => {
         this.router.navigate(['heroes/', heroe.id]);
       });
-
     } else {
-
       // Crear héroe.
+      this.heroe.id_usuario = this.authService.auth.id
       this.heroesService.agregarHeroe(this.heroe)
       .subscribe( heroe => {
         this.router.navigate(['heroes/editar', heroe.id]);

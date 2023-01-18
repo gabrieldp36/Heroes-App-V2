@@ -14,6 +14,8 @@ import { HomeComponent } from './pages/home/home.component';
 
 import { PerfilComponent } from './pages/perfil/perfil.component';
 
+import { PropiosComponent } from './pages/propios/propios.component';
+
 const routes: Routes = [
 
   {
@@ -27,6 +29,10 @@ const routes: Routes = [
       {
         path: 'listado',
         component: ListadoComponent,
+      },
+      {
+        path: 'propios',
+        component: PropiosComponent,
       },
       {
         path: 'agregar',

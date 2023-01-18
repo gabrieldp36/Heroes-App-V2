@@ -79,6 +79,11 @@ body {
     color: #b98d0c !important;
   }
 
+  .purple {
+    color: #5dcebc;
+    width: 90%;
+  }
+
 /************************************PERFIL USUARIO***************************************/
 
 .divIMGLogued {
@@ -101,6 +106,7 @@ body {
   background-size: cover;
   border-radius: 50%;
   color: transparent !important;
+  cursor: pointer;
 }
 
 .encabezadoPerfilUsuario {

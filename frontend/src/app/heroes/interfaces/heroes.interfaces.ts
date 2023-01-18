@@ -8,7 +8,7 @@ export interface Heroe {
     habilities: string;
     alt_img: string;
     assets_img: boolean;
-    usuario: number;
+    id_usuario: number;
 };
 
 export enum Publisher {

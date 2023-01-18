@@ -12,17 +12,13 @@ import { Heroe } from '../../interfaces/heroes.interfaces';
   selector: 'app-buscar',
   templateUrl: './buscar.component.html',
   styles: [
-
     `
        .mat-background {
-
         background-color: #5dcebc !important;
         height: 55px;
       }
-
       .inpt-width {
         width:60%;
-        
       }
     `
   ]
@@ -30,55 +26,36 @@ import { Heroe } from '../../interfaces/heroes.interfaces';
 export class BuscarComponent {
 
   public termino: string = '';
-
   public heroes: Heroe[] = [];
-
   public sinResultados: boolean = false;
   
   constructor(
-
     private heroesService: HeroesService,
-    
     private router:Router,
-    
   ) {};
 
   buscarSugerencias(): void {
-
     if ( this.termino.trim().length > 0 ) {
-
       this.heroesService.getSugerencias(this.termino)
-      .subscribe( 
-        
+      .subscribe(   
       heroes => {
-        
         this.heroes = heroes;
-
         (this.heroes.length === 0) ? this.sinResultados = true : this.sinResultados = false;
       });
     };
-
     (this.termino.length === 0) ? this.heroes = [] : '';
   };
 
   mostrarHeroe(event: MatAutocompleteSelectedEvent): void {
-
-    if (!event.option.value) { return; };
-        
+    if (!event.option.value) { return; };      
     const heroe: Heroe = event.option.value;
-
-    this.router.navigate( [`/heroes/${heroe.id}`] );
-      
+    this.router.navigate( [`/heroes/${heroe.id}`] );   
   };
 
   limpiarSugerencias (): void {
-
     setTimeout(() => {
-
       this.heroes = [];
-
     }, 390);
-
     this.termino = '';
   };
 };

@@ -6,26 +6,18 @@
     class="animate__animated animate__zoomIn mt-3"
 >
     <div fxFlex="50" fxLayout="column">
-
         <mat-card class="mb-4">
-
             <mat-card-header>
-
                 <h1> {{(!heroe.id) ? 'Nuevo héroe' : 'Editar Héroe'}}
-
                     <small 
                         *ngIf="heroe.superhero"
                         style="margin-left: -3px;">: {{heroe.superhero | titlecase}}
-
                     </small></h1>
-
             </mat-card-header>
-
             <mat-divider></mat-divider>
         </mat-card>
 
         <div fxFLayout="row" style="margin-left: 8px;">
-
             <div fxLayoutGap="20px">
                 <mat-form-field 
                     fxFlex="100"
@@ -41,9 +33,7 @@
                         required
                         [(ngModel)]="heroe.superhero"
                     >
-
                 </mat-form-field>
-
                 <mat-form-field
                     fxFlex="100" 
                     fxFlex.sm="50"
@@ -59,12 +49,10 @@
                         [(ngModel)]="heroe.alter_ego"
                     >
                 </mat-form-field>
-                
             </div>
         </div>
 
         <mat-form-field fxFlex="100" color="accent" style="margin-left: 8px;"> 
-            
             <mat-label> Primera Aparición </mat-label>
             <input 
                 matInput
@@ -75,7 +63,6 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100" color="accent" style="margin-left: 8px;"> 
-            
             <mat-label> Personajes </mat-label>
             <input 
                 matInput
@@ -86,7 +73,6 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100" color="accent" style="margin-left: 8px;"> 
-            
             <mat-label> Habilidades </mat-label>
             <input 
                 matInput
@@ -113,11 +99,9 @@
                     {{publisher.desc}}
                 </mat-option>
             </mat-select>
-
         </mat-form-field>
 
         <mat-form-field fxFlex="100" color="accent" style="margin-left: 8px;"> 
-            
             <mat-label> Foto Url </mat-label>
             <input 
                 matInput
@@ -131,24 +115,19 @@
         <br>
 
         <div fxLayout="row" [fxLayoutAlign]="(!heroe.id) ? 'center' : '' ">
-
             <button
-            
                 mat-raised-button
                 [color]="(!heroe.id) ? 'primary' : 'accent'"
                 style="border-radius: 20px; width: 35%;"
                 (click)="buscar()"
             >
-
                 <mat-icon mat-list-icon> {{(!heroe.id) ? 'library_add' : 'edit'}} </mat-icon>
-
                 {{(!heroe.id) ? 'Guardar' : 'Editar'}}
             </button>
 
             <span
                 *ngIf="heroe.id"
                 class="spacer"></span>
-
             <button
                 *ngIf="heroe.id"
                 mat-raised-button
@@ -157,28 +136,21 @@
                 (click)="borrarHeroe()"
             >
                 <mat-icon>delete</mat-icon>
-
                 Borrar
-
             </button>
-
         </div>
-        
     </div>
 
     <div fxFlex="50" fxFlex.sm="45">
-
         <mat-card class="mb-4" style="margin-right: 8px;">
             <mat-card-header>
          
               <h1><br></h1>
             </mat-card-header>
-
             <mat-divider></mat-divider>
         </mat-card>
 
         <div style="text-align: center; margin-right: 8px;">
-
             <img
 
                 #imagen
@@ -187,7 +159,5 @@
                 class="animate__animated animate__zoomIn"
             >   
         </div>
-
     </div>
-
 </div>

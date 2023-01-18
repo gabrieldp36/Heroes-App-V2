@@ -450,7 +450,7 @@
         // Conectamos con la base de datos.
         $link = conectarBD();
         // Realizamos consulta.
-        $sql = "SELECT * FROM usuario WHERE estado = 1";
+        $sql = "SELECT * FROM usuario";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);
@@ -470,7 +470,7 @@
                 'estado' => $fila['estado'],
             ];
         }
-        array_unshift($data, ['total' => count($data)]);
+        // array_unshift($data, ['total' => count($data)]);
         // Enviamos la información.
         mysqli_free_result($resultado);
         mysqli_close($link);
@@ -506,7 +506,7 @@
                 'estado' => $fila['estado'],
             ];
         }
-        array_unshift($data, ['total' => count($data)]);
+        // array_unshift($data, ['total' => count($data)]);
         // Enviamos la información.
         mysqli_free_result($resultado);
         mysqli_close($link);
@@ -537,8 +537,7 @@
             outputError(500);
         }
         if( mysqli_num_rows($resultado) == 0) {
-            print "No se ha encontrado un contacto con el id ingresado.";
-            outputError(404);
+            outputError(404, "No se ha encontrado un usuario con el id ingresado.");
         }
         //Extraemos la información que arroja la consulta.
         $data = mysqli_fetch_assoc($resultado);
@@ -547,7 +546,7 @@
         outputJson($data);
     }
 
-    /*******************************************CONSULTAR HEROES*****************************************/
+    /*******************************************CONSULTAR HÉROES*****************************************/
 
     function getHeroes() {
         // Se requiere el envío de un token válido.
@@ -555,7 +554,7 @@
         // Conectamos con la base de datos.
         $link = conectarBD();
         // Realizamos consulta.
-        $sql = "SELECT * FROM heroes";
+        $sql = "SELECT * FROM heroe";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);
@@ -598,21 +597,366 @@
         // Definimos juego de caracteres.
         mysqli_set_charset($link, "utf8");
         // Realizamos consulta.
-        $sql = "SELECT * FROM heroes WHERE id = $id";
+        $sql = "SELECT * FROM heroe WHERE id = $id";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);
             outputError(500);
         }
         if( mysqli_num_rows($resultado) == 0) {
-            print "No se ha encontrado un heroe con el id ingresado.";
-            outputError(404);
+            outputError(404, "No se ha encontrado un heroe con el id ingresado.");
         }
         //Extraemos la información que arroja la consulta.
         $data = mysqli_fetch_assoc($resultado);
         settype($data['id'], 'integer');
         settype($data['assets_img'], 'boolean');
         settype($data['id_usuario'], 'integer');
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($data);
+    }
+
+
+    /************************************CREACIÓN DE HÉROES***************************************/
+
+    function postHeroes() { 
+        // Se requiere el envío de un token válido.
+        requiereAutorizacion();
+        // Obtenemos la info que es enviada en el body de la request.
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        // Revisamos que el formato sea correcto.
+        if (json_last_error()) {
+            outputError(400, "El formato de datos es incorrecto");
+        };
+        // Validamos que se indique el id del usuario que crea el héroe.
+        if(!isset($data['id_usuario'])) {
+            outputError(400, "Por favor indique el id del usuario que crea el héroe");
+        }
+        // Convertimos id a integer.
+        $id_usuario = $data['id_usuario'];
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Realizamos una consulta para validar que se envíe el id de un usuario registrado.
+        $sql = "SELECT id FROM usuario WHERE id = $id_usuario";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un usuario con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Validamos la información.
+        if( !isset($data['superhero']) || trim($data['superhero']) == "" || $data['superhero'] == null ) {
+            outputError(400, "El nombre del héroe es obligatorio.");
+        };
+        if ( !isset($data['alter_ego']) || trim($data['alter_ego']) == "" || $data['alter_ego'] == null ) {
+            outputError(400, "El Alter Ego del héroe es obligatorio.");
+        };
+        if ( !isset($data['habilities']) || trim($data['habilities']) == "" || $data['habilities'] == null ) {
+            outputError(400, "Las habilidades del héroe son obligatorias.");
+        };
+        // Sanitizamos la información recibida.
+        $superhero = trim(mysqli_real_escape_string($link, $data['superhero']));
+        $alter_ego = trim(mysqli_real_escape_string($link, $data['alter_ego']));
+        $habilities = trim(mysqli_real_escape_string($link, $data['habilities']));
+        // Validamos que no exista un heroe con el mismo nombre.
+        $sql = "SELECT id FROM heroe WHERE superhero = '$superhero'";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        if (mysqli_num_rows($result) != 0) {
+            outputError(400, "El nombre del héroe ya se encuentra registrado. Elija un nombre diferente");
+        }
+        mysqli_free_result($result);
+        // Validaciones especiales de datos optativos.
+        if( !isset($data['publisher']) || trim($data['publisher']) == "" || $data['publisher'] == null ) {
+            $publisher = "''";
+        } else {
+            $publisher =  "'" . mysqli_real_escape_string( $link, trim($data['publisher']) ) . "'";
+        }
+        if( !isset($data['first_appearance']) || trim($data['first_appearance']) == "" || $data['first_appearance'] == null ) {
+            $first_appearance = "''";
+        } else {
+            $first_appearance =  "'" . mysqli_real_escape_string( $link, trim($data['first_appearance']) ) . "'";
+        }
+        if( !isset($data['characters']) || trim($data['characters']) == "" || $data['characters'] == null ) {
+            $characters = "''";
+        } else {
+            $characters =  "'" . mysqli_real_escape_string( $link, trim($data['characters']) ) . "'";
+        }
+         if( !isset($data['alt_img']) || trim($data['alt_img']) == "" || $data['alt_img'] == null ) {
+            $alt_img = "''";
+        } else {
+            $alt_img =  "'" . mysqli_real_escape_string( $link, trim($data['alt_img']) ) . "'";
+        }
+        // Guardamos al usuario en base de datos.
+        $sql = "INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters, habilities, alt_img, assets_img, id_usuario) VALUES ('$superhero', $publisher, '$alter_ego', $first_appearance, $characters, '$habilities', $alt_img, 0, $id_usuario)";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        $id = mysqli_insert_id($link);
+        // Generamos la información que se envía como respuesta, luego de crear al héroe.
+        $sql = "SELECT * FROM heroe WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        $response = mysqli_fetch_assoc($resultado);
+        settype($response['id'], 'integer');
+        settype($response['assets_img'], 'boolean');
+        settype($response['id_usuario'], 'integer');
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($response, 201);
+    };
+
+    /************************************ACTUALIZACIÓN DE HÉROES***************************************/
+
+    function patchHeroes($id) { 
+        // Se requiere el envío de un token válido.
+        requiereAutorizacion();
+        //Validamos que se indique el id del héroe a actualizar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del héroe que desea actualizar");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Obtenemos la info que es enviada en el body de la request.
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        // Revisamos que el formato sea correcto.
+        if (json_last_error()) {
+            outputError(400, "El formato de datos es incorrecto");
+        };
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Realizamos una consulta para validar que se envíe el id de un héroe creado.
+        $sql = "SELECT id FROM heroe WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un héroe con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Validamos la información.
+        if( !isset($data['superhero']) || trim($data['superhero']) == "" || $data['superhero'] == null ) {
+            outputError(400, "El nombre del héroe es obligatorio.");
+        };
+        if ( !isset($data['alter_ego']) || trim($data['alter_ego']) == "" || $data['alter_ego'] == null ) {
+            outputError(400, "El Alter Ego del héroe es obligatorio.");
+        };
+        if ( !isset($data['habilities']) || trim($data['habilities']) == "" || $data['habilities'] == null ) {
+            outputError(400, "Las habilidades del héroe son obligatorias.");
+        };
+        // Sanitizamos la información recibida.
+        $superhero = trim(mysqli_real_escape_string($link, $data['superhero']));
+        $alter_ego = trim(mysqli_real_escape_string($link, $data['alter_ego']));
+        $habilities = trim(mysqli_real_escape_string($link, $data['habilities']));
+        // Validamos que no exista un heroe con el mismo nombre.
+        $sql = "SELECT id FROM heroe WHERE superhero = '$superhero'";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        $id_heroe = mysqli_fetch_assoc($result);
+        if (mysqli_num_rows($result) != 0 && $id_heroe['id'] != $id) {
+            outputError(400, "El nombre del héroe ya se encuentra registrado. Elija un nombre diferente");
+        }
+        mysqli_free_result($result);
+        // Validaciones especiales de datos optativos.
+        if( !isset($data['publisher']) || trim($data['publisher']) == "" || $data['publisher'] == null ) {
+            $publisher = "''";
+        } else {
+            $publisher =  "'" . mysqli_real_escape_string( $link, trim($data['publisher']) ) . "'";
+        }
+        if( !isset($data['first_appearance']) || trim($data['first_appearance']) == "" || $data['first_appearance'] == null ) {
+            $first_appearance = "''";
+        } else {
+            $first_appearance =  "'" . mysqli_real_escape_string( $link, trim($data['first_appearance']) ) . "'";
+        }
+        if( !isset($data['characters']) || trim($data['characters']) == "" || $data['characters'] == null ) {
+            $characters = "''";
+        } else {
+            $characters =  "'" . mysqli_real_escape_string( $link, trim($data['characters']) ) . "'";
+        }
+         if( !isset($data['alt_img']) || trim($data['alt_img']) == "" || $data['alt_img'] == null ) {
+            $alt_img = "''";
+        } else {
+            $alt_img =  "'" . mysqli_real_escape_string( $link, trim($data['alt_img']) ) . "'";
+        }
+        // Actualizamos al héroe en base de datos.
+        $sql = "UPDATE heroe SET superhero = '$superhero', 
+                                 publisher = $publisher,
+                                 alter_ego = '$alter_ego',
+                                 first_appearance = $first_appearance,
+                                 characters = $characters,
+                                 habilities = '$habilities',
+                                 alt_img = $alt_img WHERE id = $id";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        // Generamos la información que se envía como respuesta, luego de crear al héroe.
+        $sql = "SELECT * FROM heroe WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        $response = mysqli_fetch_assoc($resultado);
+        settype($response['id'], 'integer');
+        settype($response['assets_img'], 'boolean');
+        settype($response['id_usuario'], 'integer');
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($response, 201);
+    };
+
+    /***********************************ELIMINAR HÉROE******************************************/
+
+    function deleteHeroes($id) {
+        // Esta petición requiere el envío de un token válido.
+        requiereAutorizacion();
+        //Validamos que se indique el id del usuario a eliminar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del héroe que desea eliminar");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Validamos si existe un héroe con el id enviado.
+        $sql = "SELECT id FROM heroe where id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0 ) {
+            outputError(404, "No existe un héroe con el id ingresado");
+        }
+        // Limpiamos de memoria la consulta que acabamos de realizar.
+        mysqli_free_result($resultado);
+        // Borramos al héroe de la base de datos.
+        $sql = "DELETE FROM heroe WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        mysqli_close($link);
+        outputJson(new stdClass(), 202);
+    }
+
+    /******************************************BUSCAR HÉROES**********************************************/
+
+    function getBuscar() {
+
+        // Esta petición requiere el envío de un token válido.
+        requiereAutorizacion();
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Obtenemos los query params de la petición http y los sanitizamos.
+        $termino = mysqli_real_escape_string( $link, strtolower($_GET['termino'] ?? ''));
+        $limite = mysqli_real_escape_string( $link, strtolower($_GET['limite'] ?? ''));
+        settype($limite, 'integer');
+        // Realizamos consulta.
+        $sql = "SELECT * FROM heroe h WHERE h.superhero LIKE '%$termino%' 
+                                            OR h.alter_ego LIKE '%$termino%' 
+                                            OR h.characters LIKE '%$termino%' 
+                                            OR h.habilities LIKE '%$termino%'
+                                            LIMIT $limite;";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        //Extraemos la información que arroja la consulta.
+        $data= [];
+        while( $fila = mysqli_fetch_assoc($resultado) ) {
+            $data[] = [
+
+                'id' => $fila['id']+=0,
+                'superhero' => $fila['superhero'],
+                'publisher' => $fila['publisher'],
+                'alter_ego' => $fila['alter_ego'],
+                'first_appearance' => $fila['first_appearance'],
+                'characters' => $fila['characters'],
+                'habilities' => $fila['habilities'],
+                'alt_img' => $fila['alt_img'],
+                'assets_img' => ( ($fila['assets_img']+=0) === 0) ? false : true,
+                'id_usuario' => $fila['id_usuario']+=0,
+            ];
+        }
+        // Enviamos la información.
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($data);
+    }
+
+
+    /******************************************HÉROES POR USUARIO**********************************************/
+
+
+    function getPropiosConParametros($id) {
+        // Esta petición requiere el envío de un token propio.
+        $payload = requiereAutorizacion();
+        if( ($payload->id+=0) != $id) {
+            outputError(401, "Se requiere el envío de un token propio.");
+        };
+        //Validamos que se indique el id del usuario a buscar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del usuario");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Conectamos con la Base de datos.
+        $link = conectarBD();
+        // Definimos juego de caracteres.
+        mysqli_set_charset($link, "utf8");
+        // Realizamos consulta.
+        $sql = "SELECT id FROM usuario WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un usuario con el id ingresado.");
+        }
+        mysqli_free_result($resultado);
+        // Realizamos la búsqueda de los heroes creados por el usuario cuyo id se envía.
+        $sql = "SELECT h.id, h.superhero, h.publisher, h.alter_ego, h.first_appearance, h.characters, h.habilities, h.alt_img, h.assets_img, h.id_usuario FROM heroe h INNER JOIN usuario u ON u.id = h.id_usuario WHERE h.id_usuario = $id;";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        //Extraemos la información que arroja la consulta.
+        $data= [];
+        while( $fila = mysqli_fetch_assoc($resultado) ) {
+            $data[] = [
+
+                'id' => $fila['id']+=0,
+                'superhero' => $fila['superhero'],
+                'publisher' => $fila['publisher'],
+                'alter_ego' => $fila['alter_ego'],
+                'first_appearance' => $fila['first_appearance'],
+                'characters' => $fila['characters'],
+                'habilities' => $fila['habilities'],
+                'alt_img' => $fila['alt_img'],
+                'assets_img' => ( ($fila['assets_img']+=0) === 0) ? false : true,
+                'id_usuario' => $fila['id_usuario']+=0,
+            ];
+        }
+        // Enviamos la información.
         mysqli_free_result($resultado);
         mysqli_close($link);
         outputJson($data);

@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     estado TINYINT(1) NOT NULL DEFAULT 1
 );
 
-CREATE TABLE IF NOT EXISTS heroes (
+CREATE TABLE IF NOT EXISTS heroe (
 	id INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	superhero VARCHAR(300) NOT NULL,
 	publisher VARCHAR(255) DEFAULT '',
@@ -58,14 +58,14 @@ INSERT INTO usuario (nombre, correo,  `password`, url_foto, `admin`, estado) VAL
 ('Rogelio Pérez', 'rogelio@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://imagenes.elpais.com/resizer/lKPatEHP0qf7EtzEA8hSH_ZXZEo=/1200x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/6TE7TL7D4YWZFV2TFRSGNGN6JE.jpg', '0', '1'),
 ('Paula Pratt', 'pau@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1');
 
-INSERT INTO heroes (superhero, publisher, alter_ego, first_appearance, characters, habilities, alt_img, assets_img, id_usuario) VALUES
+INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters, habilities, alt_img, assets_img, id_usuario) VALUES
 ('Batman', 'DC Comics', 'Bruce Wayne', 'Detective Comics #27', 'Bruce Wayne', 'detective, intelecto nivel genio, brillante estratega y acróbata experto, dominio de artes marciales y técnicas de sigilo e intimidación, escapismo, uso de equipamiento, dispositivos y armamento de alta tecnología', '' , 1, 1 ),
 ('Superman', 'DC Comics', 'Kal-El', 'Action Comics #1', 'Kal-El', 'detective súper fuerza, velocidad, resistencia, agilidad, reflejos, durabilidad, sentidos y longevidad, poderes oculares, agudeza sobrehumana, visión de calor, visión del espectro, electromagnético, visión microscópica, visión de rayos x, visión telescópica, visión infrarroja, aliento sobrehumano, aliento helado, aliento de viento, invulnerabilidad, factor de curación rápida y vuelo', '' , 1, 1 ),
 ('Flash', 'DC Comics', 'Jay Garrick', 'Flash Comics #1', 'Jay Garrick, Barry Allen, Wally West, Bart Allen', 'sus poderes se basan en la Súper-velocidad, los cuales obtiene de la “Fuerza de velocidad”. Entre ellos se destacan: capacidad de correr más rápido que la luz, reflejos sobrehumanos, factor curativo que le otorga regeneración casi instantánea, puede traspasar materia, crear remanentes del tiempo con su gran velocidad, lanzar energía con sus manos y viajar en el tiempo con su super-velocidad', '' , 1, 1 ),
 ('Green Lantern', 'DC Comics', 'Alan Scott', 'All-American Comics #16', 'Alan Scott, Hal Jordan, Guy Gardner, John Stewart, Kyle Raynor, Jade, Sinestro, Simon Baz', 'gracias al anillo de poder que posee, tiene la capacidad de crear manifestaciones de luz sólida mediante la utilización del pensamiento', '' , 1, 1 ),
 ('Green Arrow', 'DC Comics', 'Oliver Queen', 'More Fun Comics #73', 'Oliver Queen', 'posee una gran habilidad como arquero y tiene un amplio arsenal de flechas. Es experto en las artes marciales, habilidades ninjas y la espada. Excelente rastreador, manejo de armas y piloto aviador. Amplios recursos financieros. Inmejorable estratega', '' , 1, 1 ),
 ('Wonder Woman', 'DC Comics', 'Princess Diana', 'All Star Comics #8', 'Princess Diana', 'súper vuelo, súper fuerza, súper velocidad, inmortalidad, factor de curación, reflejos, resistencia, habilidad de lucha altamente desarrollada, capacidad de hablar con los animales y en el idioma de cualquier persona que se encuentre', '' , 1, 1 ),
-('Martian Manhunter', 'DC Comics', 'J\'onn J\'onzz', 'Detective Comics #225', 'Martian Manhunter', 'superfuerza, velocidad sobrehumana, telepatía, telekinesis, regeneración acelerada, intangibilidad, invisibilidad, cambio de forma, capacidad de volar, visión láser y nueve sentidos aumentados', '' , 1, 1 ),
+('Martian Manhunter', 'DC Comics', 'J\'onn J\'onzz', 'Detective Comics #225', 'Martian Manhunter', 'súper fuerza, velocidad sobrehumana, telepatía, telekinesis, regeneración acelerada, intangibilidad, invisibilidad, cambio de forma, capacidad de volar, visión láser y nueve sentidos aumentados', '' , 1, 1 ),
 ('Robin/Nightwing', 'DC Comics', 'Dick Grayson', 'Detective Comics #38', 'Dick Grayson', 'artista marcial experto, estrategias de combate, tecnología avanzada y habilidad gimnástica', '' , 1, 1 ),
 ('Blue Beetle', 'DC Comics', 'Dan Garret', 'Mystery Men Comics #1', 'Dan Garret, Ted Kord, Jaime Reyes', 'su armadura alienígena le concede: la capacidad de volar, resistencia y durabilidad mejoradas, creación de armas y traducción de idiomas alienígenas', '' , 1, 1 ),
 ('Black Canary', 'DC Comics', 'Dinah Drake', 'Flash Comics #86', 'Dinah Drake, Dinah Lance', 'experta en artes marciales, grito ultrasónico, tenaz aviadora y motociclista, gran estratega, reflejos, resistencia y agilidad sobrehumanos', '' , 1, 1 ),
@@ -79,7 +79,7 @@ INSERT INTO heroes (superhero, publisher, alter_ego, first_appearance, character
 ('Iron Man', 'Marvel Comics', 'Tony Stark', 'Tales of Suspense #39', 'Tony Stark', 'cómo Tony Stark: intelecto nivel genio, experto científico e ingeniero. Cómo Iron Man: fuerza sobrehumana y durabilidad, vuelo supersónico, repulsor de energía y misiles de proyección, regenerativo soporte vital, uso de equipamiento, dispositivos y armamento de alta tecnología', '' , 1, 2 ),
 ('Thor', 'Marvel Comics', 'Thor Odinson', 'Journey into Myster #83', 'Thor Odinson', 'fuerza sobrehumana, velocidad, durabilidad y longevidad. Habilidades a través de Mjolnir: teletransportación interdimensional, manipulación eléctrica, vuelo y manipulación del tiempo', '' , 1, 2),
 ('Hulk', 'Marvel Comics', 'Bruce Banner', 'The Incredible Hulk #1', 'Bruce Banner', 'súper fuerza, velocidad, resistencia y salto, invulnerabilidad, longevidad, factor de curación rápida, capacidad de respirar bajo el agua, respirar en el espacio y ver fantasmas y otras entidades astrales. Todas sus habilidades aumentan en relación a su furia y emociones negativas tales como la ira, el miedo, e incluso los celos', '' , 1, 2),
-('Wolverine', 'Marvel Comics', 'James Howlett', 'The Incredible Hulk #180', 'James Howlett', 'factor de curación mutante, regeneración intensificada, resistencia a poderes psíquicos, garras retráctiles, esqueleto recubierto de adamantium, sentidos animales, capacidad física sobrehumana', '' , 1, 2),
+('Wolverine', 'Marvel Comics', 'James Logan', 'The Incredible Hulk #180', 'James Logan', 'factor de curación mutante, regeneración intensificada, resistencia a poderes psíquicos, garras retráctiles, esqueleto recubierto de adamantium, sentidos animales, capacidad física sobrehumana', '' , 1, 2),
 ('Daredevil', 'Marvel Comics', 'Matthew Michael Murdock', 'Daredevil #1', 'Matthew Michael Murdock', 'ecolocalización, acróbata experto y maestro en artes marciales, tirador de precisión perfecta carencia del sentido del miedo', '' , 1, 2),
 ('Hawkeye', 'Marvel Comics', 'Clinton Francis Barton', 'Tales of Suspense #57', 'Clinton Francis Barton', 'Arquero excepcional, con una puntería perfecta, excelente percepción y reflejos extraordinarios. Acróbata experto. Buen combatiente cuerpo a cuerpo. Arcos fabricados por industrias Stark, uno corto, otro largo y otro compuesto. Flechas multiusos', '' , 1, 2),
 ('Cyclops', 'Marvel Comics', 'Scott Summers', 'X-Men #1', 'Scott Summers', 'rayos ópticos contusivos de energía solar, maestro táctico, artista marcial experto, excelente combatiente cuerpo a cuerpo e inmunidad a los poderes de sus hermanos', '' , 1, 2),
@@ -94,3 +94,4 @@ INSERT INTO heroes (superhero, publisher, alter_ego, first_appearance, character
 ('Él - Magnus', 'Marvel Comics', 'Adam Warlock', 'Fantastic Four n.º 66', 'Adam Warlock', 'posee varios poderes y características sobrehumanas derivadas de su estructura genética artificial, como fuerza y resistencia aumentadas, así como la capacidad de transformar energía cósmica con diferentes efectos y usos', 'https://i.annihil.us/u/prod/marvel/i/mg/4/00/5c9d29256c960/clean.jpg' , 0, 3);
 
 COMMIT;
+

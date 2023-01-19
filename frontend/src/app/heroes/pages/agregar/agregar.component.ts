@@ -61,6 +61,8 @@ export class AgregarComponent implements OnInit {
     assets_img: false,
     id_usuario: 0,
   };
+  public adminUser: boolean = false;
+  public heroesPropios: number[] = []
 
   constructor(
     private authService: AuthService,
@@ -72,9 +74,14 @@ export class AgregarComponent implements OnInit {
   ) {};
 
   ngOnInit(): void {
+    this.configurarRuta();
+  };
+
+  public configurarRuta(): void {
     if ( !this.router.url.includes('editar') ) { 
       this.heroesService.obtenerUsuarioActualizado().subscribe();
     } else {
+      this.determinarPermanencia();
       this.activatedRoute.params
       .pipe( switchMap ( ({id})  => this.heroesService.getHeroesPorId(id) ) )
       .subscribe( 
@@ -85,7 +92,32 @@ export class AgregarComponent implements OnInit {
     };
   };
 
-  buscar(): void {
+  // Validar permanencia en la ruta.
+
+  public esHeroePropio(id:number): boolean {
+    return this.heroesPropios.includes(id);
+  };
+
+  public determinarPermanencia(): void {
+    this.heroesService.getHeroesPropiosIds().subscribe( (heroesIds) => {
+      this.heroesPropios = heroesIds;
+      this.heroesService.obtenerUsuarioActualizado().subscribe( (_) => {
+        if(this.authService.auth.admin) {
+          this.adminUser = this.authService.auth.admin;
+        };
+        this.activatedRoute.params.subscribe( ({id}) => {
+          if( !(this.adminUser || this.esHeroePropio(id*1)) ) {
+            this.router.navigate(['heroes/listado']);
+          };
+        });
+      });
+    });
+  };
+
+  // Agregar - Editar - Eliminar Héroes.
+
+  public agregarEditar(): void {
+    // Validaciones campos formulario.
     if ( (this.heroe.superhero?.trim().length || 0) === 0 ) {
       this.dialog.open(RellenarCamposComponent);
       return;
@@ -96,7 +128,6 @@ export class AgregarComponent implements OnInit {
       this.dialog.open(RellenarCamposComponent);
       return;
     };
-
     if (this.heroe.id) {
       // Actualizar héroe.
       this.heroesService.actualizarHeroe(this.heroe)

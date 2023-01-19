@@ -8,6 +8,8 @@ import { switchMap } from 'rxjs/operators';
 
 import { HeroesService } from '../../services/heroes.service';
 
+import { AuthService } from '../../../auth/services/auth.service';
+
 import { Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({
@@ -37,15 +39,24 @@ export class HeroeComponent implements OnInit {
   @ViewChild('imagen') imagenHeroe!:ElementRef<HTMLImageElement>;
   public error!: HttpErrorResponse;
   public heroe!: Heroe;
+  public heroesPropios: number[] = [];
+  public adminUser: boolean = false;
   public imgLoad: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private heroesService: HeroesService,
     private router:Router,
   ) {};
 
   ngOnInit(): void {
+    this.getHeroesPropios();
+    this.esAdministrador();
+    this.getHeroe();
+  };
+
+  public getHeroe():void {
     this.activatedRoute.params
     .pipe( switchMap( ( {id} ) => this.heroesService.getHeroesPorId( id ) ) )
     .subscribe( 
@@ -57,6 +68,24 @@ export class HeroeComponent implements OnInit {
         this.error = error;
       },
     );
+  };
+
+  public getHeroesPropios(): void {
+    this.heroesService.getHeroesPropiosIds().subscribe( (heroesIds) => {
+      this.heroesPropios = heroesIds;
+    });
+  };
+
+  public esHeroePropio(id:number): boolean {
+    return this.heroesPropios.includes(id);
+  };
+
+  public esAdministrador():void {
+    this.heroesService.obtenerUsuarioActualizado().subscribe( (_) => {
+      if(this.authService.auth.admin) {
+        this.adminUser = this.authService.auth.admin;
+      };
+    });
   };
 
   irListado(): void {

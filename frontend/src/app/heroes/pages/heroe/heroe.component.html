@@ -85,9 +85,9 @@
                 <div
                     *ngIf="!imgLoad"
                     style="width: 400px; max-width: 100%; height: 500px;"
-                     fxLayout="row"
-                     fxLayoutAlign="center center">
-                    
+                    fxLayout="row"
+                    fxLayoutAlign="center center"
+                >
                     <mat-spinner></mat-spinner>
                 </div>
                 <img 
@@ -161,7 +161,12 @@
             </div>
 
             <div style="margin-top: 10px;">               
-                <mat-card class="mat-background">
+                <mat-card 
+                    class="mat-background" 
+                    [style]="(adminUser || esHeroePropio(heroe.id)) 
+                                ? 'display: flex; justify-content: center;' 
+                                : 'display: flex; justify-content: space-around;'"
+                >
                     <button 
                         mat-stroked-button 
                         color='accent' 
@@ -178,7 +183,8 @@
                         <mat-icon>search</mat-icon>
                         Ir al buscador
                     </button>
-                    <button 
+                    <button
+                        *ngIf="adminUser || esHeroePropio(heroe.id)"
                         mat-stroked-button  
                         style="border-color: #7b1fa2; border-radius: 20px; color: #ffd645 !important;"
                         (click)="irEditar()">

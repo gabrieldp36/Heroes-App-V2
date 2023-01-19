@@ -54,6 +54,13 @@ body {
   font-size: 15px;
 }
 
+.spinnerHeroeCard {
+  height: 250px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
 /************************************SWEET ALERT***************************************/
 
 .swal2-styled.swal2-confirm {
@@ -283,5 +290,8 @@ body {
 @media (max-width: 720px) {
   .hiddenElement {
    display: none;
+  }
+  .navBarAvatar {
+    margin-right: 10px;
   }
 }

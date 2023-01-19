@@ -459,8 +459,10 @@
         //Extraemos la información que arroja la consulta.
         $data= [];
         while( $fila = mysqli_fetch_assoc($resultado) ) {
+            settype($fila['id'], 'integer');
+            settype($fila['admin'], 'boolean');
+            settype($fila['estado'], 'boolean');
             $data[] = [
-
                 'id' => $fila['id'],
                 'nombre' => $fila['nombre'],
                 'correo' => $fila['correo'],
@@ -495,6 +497,9 @@
         //Extraemos la información que arroja la consulta.
         $data= [];
         while( $fila = mysqli_fetch_assoc($resultado) ) {
+            settype($fila['id'], 'integer');
+            settype($fila['admin'], 'boolean');
+            settype($fila['estado'], 'boolean');
             $data[] = [
 
                 'id' => $fila['id'],
@@ -541,6 +546,9 @@
         }
         //Extraemos la información que arroja la consulta.
         $data = mysqli_fetch_assoc($resultado);
+        settype($data['id'], 'integer');
+        settype($data['admin'], 'boolean');
+        settype($data['estado'], 'boolean');
         mysqli_free_result($resultado);
         mysqli_close($link);
         outputJson($data);

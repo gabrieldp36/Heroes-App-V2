@@ -26,6 +26,8 @@ export class HeroesService {
     private authService: AuthService
   ) {};
 
+  /************API USUARIOS *************/
+
   public popularFormulario(): Observable<Boolean> {
     if( localStorage.getItem('token') ) {
       return this.http.get<Usuario>(`${this.baseUrl}/uinfo`)
@@ -83,6 +85,8 @@ export class HeroesService {
     );
   };
 
+  /************API HÉROES *************/
+
   public getHeroes(): Observable<Heroe[]> {
     return this.http.get<Heroe[]>(`${this.baseUrl}/heroes`);
   };
@@ -93,6 +97,23 @@ export class HeroesService {
 
   public getHeroesPropios(id_usuario: number): Observable<Heroe[]> {
     return this.http.get<Heroe[]>(`${this.baseUrl}/propios/${id_usuario}`);
+  };
+
+  public getHeroesPropiosIds(): Observable<number[]> {
+
+    return this.http.get<Usuario>(`${this.baseUrl}/uinfo`)
+    .pipe( 
+      switchMap( user => {
+        return this.http.get<Heroe[]>(`${this.baseUrl}/propios/${user.id}`);
+      }),
+      map( (heroesPropios) => {
+        const heroesId: number[] = [];
+        heroesPropios.map( (heroe) =>  {
+          heroesId.push(heroe.id)
+        });
+        return heroesId;
+      }),
+    );
   };
 
   public getSugerencias(termino: string): Observable<Heroe[]> {

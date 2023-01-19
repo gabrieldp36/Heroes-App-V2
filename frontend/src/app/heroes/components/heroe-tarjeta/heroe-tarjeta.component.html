@@ -4,11 +4,22 @@
         <mat-card-subtitle> {{heroe.alter_ego | titlecase}} </mat-card-subtitle>
     </mat-card-header>
 
+    <div
+        *ngIf="!imgLoad"
+        class="spinnerHeroeCard"
+        mat-card-image
+    >
+        <mat-spinner></mat-spinner>
+    </div>
+
     <img
         #imagen
-        mat-card-image 
+        class="animate__animated animate__fadeIn"
+        mat-card-image
+        [hidden]="!imgLoad"
         [src]="heroe | imagen"
         (error)="imagenError()"
+        (load)="onLoadImg()"
     >
 
     <mat-card-content>
@@ -21,7 +32,7 @@
             <i *ngIf="heroe.characters">Personajes: </i> {{heroe.characters}}
         </p>
     </mat-card-content>
-
+    
     <mat-card-actions style="margin-top: -10px;">
         <button
             [routerLink]="['/heroes', heroe.id]"
@@ -32,10 +43,9 @@
             <mat-icon>add</mat-icon>
             Leer más...
         </button>
-
         <span class="spacer"></span>
-
-        <button 
+        <button
+            *ngIf="adminUser || esHeroePropio(heroe.id)"
             [routerLink]="['/heroes/editar', heroe.id]"
             mat-button 
             color="warn" 
@@ -44,6 +54,5 @@
             <mat-icon>edit</mat-icon>
             Editar
         </button>
-
     </mat-card-actions>
 </mat-card>

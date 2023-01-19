@@ -9,7 +9,8 @@ export interface Usuario {
     nombre: string;
     correo: string;
     url_foto: string;
-    admin: number;
+    admin: boolean;
+    estado: boolean;
 };
 
 export interface TokenResponse {

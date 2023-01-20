@@ -20,13 +20,20 @@ import {MatListModule} from '@angular/material/list';
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 import {MatSelectModule} from '@angular/material/select';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
+import {MatSortModule} from '@angular/material/sort';
+
+import {MatTableModule} from '@angular/material/table';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
+
 
 @NgModule({
   exports: [
@@ -43,6 +50,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatToolbarModule,
   ]
 })

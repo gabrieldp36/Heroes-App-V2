@@ -57,6 +57,19 @@
                 <span> Buscar Héroe </span>
             </a>
             <hr class="purple container-fluid">
+            <a 
+                *ngIf="usuario.admin"
+                routerLink="./admin"
+                mat-list-item
+                (click)="sidenav.toggle()"
+            >
+                <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
+                <span>Administrador</span>
+            </a>
+            <hr 
+                *ngIf="usuario.admin"
+                class="purple container-fluid"
+            >
         </mat-nav-list>
     </mat-sidenav>
 
@@ -70,9 +83,7 @@
             <mat-icon>menu</mat-icon>
         </button>
 
- 
         <h1 style="margin-left: 5px;"> Héroes App </h1>
-
 
         <span class="spacer"></span>
 
@@ -96,7 +107,7 @@
         >
             <mat-icon>logout</mat-icon>
             Logout
-    </button>
+        </button>
 
     </mat-toolbar>
 

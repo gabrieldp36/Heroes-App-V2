@@ -32,6 +32,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 
 import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eliminar.component';
 import { PropiosComponent } from './pages/propios/propios.component';
+import { AdministradorComponent } from './pages/administrador/administrador.component';
 
 @NgModule({
 
@@ -47,7 +48,8 @@ import { PropiosComponent } from './pages/propios/propios.component';
     RellenarCamposComponent,
     PerfilComponent,
     DialogEliminarComponent,
-    PropiosComponent
+    PropiosComponent,
+    AdministradorComponent
   ],
   imports: [
     CommonModule,

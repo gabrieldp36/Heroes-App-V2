@@ -450,7 +450,7 @@
         // Conectamos con la base de datos.
         $link = conectarBD();
         // Realizamos consulta.
-        $sql = "SELECT * FROM usuario";
+        $sql = "SELECT u.id, u.nombre, u.correo, u.url_foto, u.estado FROM usuario u WHERE u.admin != 1";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);
@@ -460,15 +460,12 @@
         $data= [];
         while( $fila = mysqli_fetch_assoc($resultado) ) {
             settype($fila['id'], 'integer');
-            settype($fila['admin'], 'boolean');
             settype($fila['estado'], 'boolean');
             $data[] = [
                 'id' => $fila['id'],
                 'nombre' => $fila['nombre'],
                 'correo' => $fila['correo'],
-                'password' => $fila['password'],
                 'url_foto' => $fila['url_foto'],
-                'admin' => $fila['admin'],
                 'estado' => $fila['estado'],
             ];
         }
@@ -488,7 +485,7 @@
         // Conectamos con la base de datos.
         $link = conectarBD();
         // Realizamos consulta.
-        $sql = "SELECT * FROM usuario WHERE estado = 0";
+        $sql = "SELECT u.id, u.nombre, u.correo, u.url_foto, u.estado FROM usuario u WHERE estado = 0 AND admin != 1 ";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);
@@ -498,16 +495,13 @@
         $data= [];
         while( $fila = mysqli_fetch_assoc($resultado) ) {
             settype($fila['id'], 'integer');
-            settype($fila['admin'], 'boolean');
             settype($fila['estado'], 'boolean');
             $data[] = [
 
                 'id' => $fila['id'],
                 'nombre' => $fila['nombre'],
                 'correo' => $fila['correo'],
-                'password' => $fila['password'],
                 'url_foto' => $fila['url_foto'],
-                'admin' => $fila['admin'],
                 'estado' => $fila['estado'],
             ];
         }
@@ -535,7 +529,7 @@
         // Definimos juego de caracteres.
         mysqli_set_charset($link, "utf8");
         // Realizamos consulta.
-        $sql = "SELECT * FROM usuario WHERE id = $id";
+        $sql = "SELECT u.id, u.nombre, u.correo, u.url_foto, u.admin, u.estado FROM usuario u WHERE id = $id";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);

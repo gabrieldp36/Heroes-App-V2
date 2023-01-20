@@ -285,6 +285,23 @@ body {
   border-color: rgba(217, 38, 38, 0.65);
 }
 
+/************************************PERFIL USUARIO***************************************/
+
+.tableUser {
+  padding-top: 30px; 
+  padding-bottom: 50px;
+}
+
+.navBarAvatarTable {
+  margin-top: 10px; 
+  margin-bottom: 10px;
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  border-radius: 50%;
+  color: transparent !important;
+}
+
 /************************************MEDIA QUERIES***************************************/
 
 @media (max-width: 720px) {

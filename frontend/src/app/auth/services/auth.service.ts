@@ -92,6 +92,13 @@ export class AuthService {
     return of(false);
   };
 
+  public getUsuarios(): Observable<Usuario[]> {
+    if( localStorage.getItem('token') ) {
+      return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios`);
+    };
+    return of([]);
+  };
+
   public esImgUrl(img: string): boolean {
     if ( this._imgRegex.test(img) ) {
       return true;

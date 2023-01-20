@@ -16,8 +16,9 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 
 import { PropiosComponent } from './pages/propios/propios.component';
 
-const routes: Routes = [
+import { AdministradorComponent } from './pages/administrador/administrador.component';
 
+const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'propios',
         component: PropiosComponent,
+      },
+      {
+        path: 'admin',
+        component: AdministradorComponent,
       },
       {
         path: 'agregar',

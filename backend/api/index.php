@@ -111,6 +111,36 @@
         die;
     };
 
+    /****************************************VALIDAR TOKEN ENVIADO*****************************************/
+
+    function requiereAutorizacion() {
+        try {
+            $headers = getallheaders();
+            if (!isset($headers['Authorization'])) {
+                outputError(401, "No se han enviado un token en la petición");
+            };
+            list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
+            $decoded = JWT::decode($jwt, JWT_KEY, [JWT_ALG]);
+        } catch(Exception $e) {
+            outputError(401, "Token Inválido"); //$e->getMessage(). Para obtener el mensaje de la excepción.
+        };
+        return $decoded;
+    };
+
+    /************************OBTENER INFO DEL USUARIO A PARTIR DEL TOKEN GENERADO**************************/
+
+    function getUinfo() {
+        $payload = requiereAutorizacion();
+        output(['id'=>$payload->id+=0, 'nombre'=>$payload->nombre, 'correo'=>$payload->correo, 'url_foto' => $payload->url_foto, 'admin'=>$payload->admin+=0]);
+    };
+
+    /*****************************VALIDAR TOKEN USUARIO****************************/
+
+    function getValidar() {
+        $payload = requiereAutorizacion();
+        output(['ok'=> true]);
+    };
+
     /*************************AUTENTICACIÓN Y LOGUEO DE USUARIOS*****************************/
 
     function autenticar($correo, $password) {
@@ -826,7 +856,7 @@
     function deleteHeroes($id) {
         // Esta petición requiere el envío de un token válido.
         requiereAutorizacion();
-        //Validamos que se indique el id del usuario a eliminar.
+        //Validamos que se indique el id del héroe a eliminar.
         if(!$id) {
             outputError(400, "Por favor indique el id del héroe que desea eliminar");
         }
@@ -906,7 +936,6 @@
 
     /******************************************HÉROES POR USUARIO**********************************************/
 
-
     function getPropiosConParametros($id) {
         // Esta petición requiere el envío de un token propio.
         $payload = requiereAutorizacion();
@@ -964,34 +993,163 @@
         outputJson($data);
     }
 
-    /****************************************VALIDAR TOKEN ENVIADO*****************************************/
+    /******************************************CONSULTAR COMENTARIOS**********************************************/
 
-    function requiereAutorizacion() {
-        try {
-            $headers = getallheaders();
-            if (!isset($headers['Authorization'])) {
-                outputError(401, "No se han enviado un token en la petición");
-            };
-            list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
-            $decoded = JWT::decode($jwt, JWT_KEY, [JWT_ALG]);
-        } catch(Exception $e) {
-            outputError(401, "Token Inválido"); //$e->getMessage(). Para obtener el mensaje de la excepción.
+    function getComentariosConParametros($id) {
+        // Esta petición requiere el envío de un token válido.
+        $payload = requiereAutorizacion();
+        //Validamos que se indique el id del héroe cuyos conmentarios se deseean consultar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del héroe");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Conectamos con la Base de datos.
+        $link = conectarBD();
+        // Definimos juego de caracteres.
+        mysqli_set_charset($link, "utf8");
+        // Realizamos consulta.
+        $sql = "SELECT id FROM heroe WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un héroe con el id ingresado.");
+        }
+        mysqli_free_result($resultado);
+        // Realizamos la búsqueda de los comentarios.
+        $sql = "SELECT c.id AS id_comentario, u.id, u.url_foto, u.nombre, c.descripcion 
+                FROM usuario u INNER JOIN comentario c 
+                ON c.id_usuario = u.id WHERE c.id_heroe = $id;";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        //Extraemos la información que arroja la consulta.
+        $data= [];
+        while( $fila = mysqli_fetch_assoc($resultado) ) {
+            $data[] = [
+                'id_comentario' => $fila['id_comentario']+=0,
+                'id_usuario' => $fila['id']+=0,
+                'url_foto' => $fila['url_foto'],
+                'nombre' => $fila['nombre'],
+                'descripcion' => $fila['descripcion'],
+            ];
+        }
+        // Enviamos la información.
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($data);
+    }
+
+
+    /***********************************ELIMINAR COMENTARIO******************************************/
+
+    function deleteComentarios($id) {
+        // Esta petición requiere el envío de un token válido.
+        $payload = requiereAutorizacion();
+        //Validamos que se indique el id del comentario a eliminar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del comentario que desea eliminar");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Validamos si existe un comentario con el id enviado.
+        $sql = "SELECT id FROM comentario where id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0 ) {
+            outputError(404, "No existe un comentario con el id ingresado");
+        }
+        $fila = mysqli_fetch_assoc($resultado);
+        // Verificamos que el token sea propio (un usuario sólo puede eliminar comentarios propios).
+        // En caso de no ser un comentario propio, corroboramos que el token sea de un administrador.
+        if( $payload->id != $id ) {
+            if( ($payload->admin+=0) != 1) {
+                outputError(401, "Sólo un administrador puede eliminar comentarios ajenos.");
+            }
         };
-        return $decoded;
+        // Limpiamos de memoria la consulta que acabamos de realizar.
+        mysqli_free_result($resultado);
+        // Borramos al héroe de la base de datos.
+        $sql = "DELETE FROM comentario WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        mysqli_close($link);
+        outputJson([], 202);
+    }
+
+   /************************************CREACIÓN DE HÉROES***************************************/
+
+    function postComentarios() { 
+        // Se requiere el envío de un token válido.
+        requiereAutorizacion();
+        // Obtenemos la info que es enviada en el body de la request.
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        // Revisamos que el formato sea correcto.
+        if (json_last_error()) {
+            outputError(400, "El formato de datos es incorrecto");
+        };
+        // Validamos que se indique el id del usuario que postea el comentario.
+        if(!isset($data['id_usuario'])) {
+            outputError(400, "Por favor indique el id del usuario que postea el comentario");
+        }
+         // Validamos que se indique el id del héroe al cual corresponde el comentario.
+        if(!isset($data['id_heroe'])) {
+            outputError(400, "Por favor indique el id del héroe al cual corresponde el comentario");
+        }
+        // Convertimos id del usuario a integer.
+        $id_usuario = $data['id_usuario'];
+         // Convertimos id del héroe a integer.
+        $id_heroe = $data['id_heroe'];
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Realizamos una consulta para validar que se envíe el id de un usuario registrado.
+        $sql = "SELECT id FROM usuario WHERE id = $id_usuario";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un usuario con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Realizamos una consulta para validar que se envíe el id de un héroe creado.
+        $sql = "SELECT id FROM heroe WHERE id = $id_heroe";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un heroe con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Validamos la información.
+        if( !isset($data['comentario']) || trim($data['comentario']) == "" || $data['comentario'] == null ) {
+            outputError(400, "El comentario es obligatorio.");
+        };
+        // Sanitizamos la información recibida.
+        $comentario = trim(mysqli_real_escape_string($link, $data['comentario']));
+        // Guardamos al usuario en base de datos.
+        $sql = "INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES ($id_usuario, $id_heroe, '$comentario')";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        $id = mysqli_insert_id($link);
+        mysqli_close($link);
+        outputJson(['id' => $id], 201);
     };
-
-    /************************OBTENER INFO DEL USUARIO A PARTIR DEL TOKEN GENERADO**************************/
-
-    function getUinfo() {
-        $payload = requiereAutorizacion();
-        output(['id'=>$payload->id+=0, 'nombre'=>$payload->nombre, 'correo'=>$payload->correo, 'url_foto' => $payload->url_foto, 'admin'=>$payload->admin+=0]);
-    };
-
-    /*****************************VALIDAR TOKEN USUARIO****************************/
-
-    function getValidar() {
-        $payload = requiereAutorizacion();
-        output(['ok'=> true]);
-    };
-
-   

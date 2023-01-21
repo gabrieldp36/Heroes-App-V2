@@ -50,13 +50,32 @@ CREATE TABLE IF NOT EXISTS heroe (
     CONSTRAINT FOREIGN KEY fk_usuario(id_usuario) REFERENCES usuario(id)
 );
 
+CREATE TABLE IF NOT EXISTS comentario (
+	id INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER(11) NOT NULL,
+	id_heroe INTEGER(11) NOT NULL,
+	descripcion TEXT,
+    CONSTRAINT FOREIGN KEY fk_usuario_comentario(id_usuario) REFERENCES usuario(id),
+    CONSTRAINT FOREIGN KEY fk_heroe_comentario(id_usuario) REFERENCES heroe(id)
+);
+
 -- INSERTS INICIALES.
 
 INSERT INTO usuario (nombre, correo,  `password`, url_foto, `admin`, estado) VALUES
 ('Spike Spiegel', 'admin@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://imgix.ranker.com/user_node_img/50088/1001742623/original/whatever-happens-photo-u1?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=650', 1, 1),
-('Lionel Messi ', 'goat@gmail.com', '$2y$10$tvWBr8/NRDZewj.BZxh5xOq4dHiBSduo8PIQZJBoeCAkZ7vBniQEm', 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki', 1, 1),
-('Rogelio Pérez', 'rogelio@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://imagenes.elpais.com/resizer/lKPatEHP0qf7EtzEA8hSH_ZXZEo=/1200x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/6TE7TL7D4YWZFV2TFRSGNGN6JE.jpg', '0', '1'),
-('Paula Pratt', 'pau@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1');
+('Hitokiri Battousai', 'admin2@gmail.com', '$2y$10$tvWBr8/NRDZewj.BZxh5xOq4dHiBSduo8PIQZJBoeCAkZ7vBniQEm', 'https://somoskudasai.com/wp-content/uploads/2022/12/portada_rurouni-kenshin-6.jpg', 1, 1),
+('Rogelio Pérez', 'rogelio@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Paula Pratt', 'pau@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1581403341630-a6e0b9d2d257?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Manuel Rodríguez', 'manu@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1'),
+('Carolina Gómez', 'caro@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=489&q=80', '0', '1'),
+('Valentina Taboada', 'valen@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1526510747491-58f928ec870f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Martín Palermo', 'martin@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1'),
+('Tomás Canaletti', 'tomas@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Paulo Juez', 'paulo@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Lionel Ricardo', 'lionel@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Martina Alonzo', 'martu@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1554423443-d9b73c9b7ced?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=518&q=80', '0', '1'),
+('Delfina Sanz', 'delfi@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Pia Marín', 'pia@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', '', '0', '1');
 
 INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters, habilities, alt_img, assets_img, id_usuario) VALUES
 ('Batman', 'DC Comics', 'Bruce Wayne', 'Detective Comics #27', 'Bruce Wayne', 'detective, intelecto nivel genio, brillante estratega y acróbata experto, dominio de artes marciales y técnicas de sigilo e intimidación, escapismo, uso de equipamiento, dispositivos y armamento de alta tecnología', '' , 1, 1 ),
@@ -92,6 +111,24 @@ INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters
 ('Groot', 'Marvel Comics', 'Monarca Planeta X', 'Tales to Astonish #13', 'Monarca Planeta X', 'succión de madera, resistente al fuego, capacidad de controlar los árboles, factor de curación acelerado y posee nivel intelectual de genio', 'https://i.pinimg.com/564x/ed/6a/ee/ed6aeeb286bcb02c85cf2ae92fb9be3d.jpg' , 0, 3),
 ('Storm', 'Marvel Comics', 'Ororo Iqadi Munroe', 'Giant Size X-Men # 1', 'Ororo Iqadi Munroe', 'capacidad psiónica de controlar todos los aspectos naturales del universo, entre ellos el clima. Puede manipular el viento, crear relámpagos, y generar todo tipo de fenómenos climáticos naturales. Además, Storm puede reducir o elevar la temperatura de su ambiente. También puede manipular el viento para elevarse a sí misma y volar a altas velocidades. Es inmune a los efectos del clima, a los relámpagos, al calor extremo y al frío. Entre las manifestaciones más insólitas de su poder se encuentra la fusión de agentes contaminadores tóxicos atmosféricos en la niebla ácida o lluvias tóxicas', 'https://i.pinimg.com/564x/06/85/48/068548b2fb8b95a3d594473952908d6f.jpg' , 0, 3),
 ('Él - Magnus', 'Marvel Comics', 'Adam Warlock', 'Fantastic Four n.º 66', 'Adam Warlock', 'posee varios poderes y características sobrehumanas derivadas de su estructura genética artificial, como fuerza y resistencia aumentadas, así como la capacidad de transformar energía cósmica con diferentes efectos y usos', 'https://i.annihil.us/u/prod/marvel/i/mg/4/00/5c9d29256c960/clean.jpg' , 0, 3);
+
+INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
+(1,1, 'Batman el auténtico caballero de la noche!!'),
+(2,1, '¿Qué le regaló batman a su mamá en su cumpleaños? Una Bati-Dora...'),
+(3,1, 'El batman de crónica... El mejor de todo los tiempos!!'),
+(4,1, 'No naciste para morir siendo igual que los demás...'),
+(5,1, 'El más flojito... Wolverine se lo morfa...'),
+(6,1, 'The GOAT...'),
+(7,1, 'Nuestra mayor gloria no consiste en no caer nunca... sino en caer y levantarnos constantemente'),
+(8,1, 'Smoke Machine!'),
+(9,1, 'Muy buen héroe, buen aporte.'),
+(10,1, 'No te la bancas batman...');
+
+INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
+(1,2, 'Superman el más groso!!'),
+(2,2, 'Kryptonita...'),
+(4,2, 'Todo gran poder conlleva una gran responsabilidad'),
+(8,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
 
 COMMIT;
 

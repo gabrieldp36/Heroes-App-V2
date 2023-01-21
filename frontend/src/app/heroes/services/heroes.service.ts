@@ -62,6 +62,13 @@ export class HeroesService {
     return of(false);
   };
 
+  public getUsuarios(): Observable<Usuario[]> {
+    if( localStorage.getItem('token') ) {
+      return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios`);
+    };
+    return of([]);
+  };
+
   public actualizarPerfil(nombre: string,  url_foto: string, correo: string, password: string): Observable<boolean>  { 
     const body = { nombre,  url_foto, correo, password };
     return this.http.get<Usuario>(`${this.baseUrl}/uinfo`)
@@ -80,6 +87,22 @@ export class HeroesService {
       switchMap( user => {
         return this.http.delete<AuthResponse>(`${this.baseUrl}/usuarios/${user.id}`)
       }),
+      map( (_) => true),
+      catchError( err => of(err.error.msg) ),
+    );
+  };
+
+  public bloquearUsuario(id: number): Observable<boolean>  { 
+    return this.http.delete<AuthResponse>(`${this.baseUrl}/usuarios/${id}`)
+    .pipe(
+      map( (_) => true),
+      catchError( err => of(err.error.msg) ),
+    );
+  };
+
+  public reactivarUsuario(id: number): Observable<boolean>  { 
+    return this.http.patch<AuthResponse>(`${this.baseUrl}/reactivar/${id}`,{})
+    .pipe(
       map( (_) => true),
       catchError( err => of(err.error.msg) ),
     );

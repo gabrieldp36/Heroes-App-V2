@@ -8,11 +8,14 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 
 import { MatSort } from '@angular/material/sort';
 
+import Swal from 'sweetalert2';
+
 import { HeroesService } from '../../services/heroes.service';
 
 import { AuthService } from '../../../auth/services/auth.service';
 
 import { Usuario } from '../../../auth/interfaces/auth.interfaces';
+
 
 @Component({
   selector: 'app-administrador',
@@ -63,7 +66,7 @@ export class AdministradorComponent implements OnInit, AfterViewInit {
   };
 
   public popularTabla(): void {
-    this.authService.getUsuarios().subscribe({
+    this.heroesService.getUsuarios().subscribe({
       next: (usuarios) => { 
         this.dataSource = new MatTableDataSource(this.agregrarPlaceHolder(usuarios));
         this.dataSource.paginator = this.paginator;
@@ -91,4 +94,68 @@ export class AdministradorComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     };
   };
+
+  public bloquearUsuario(id: number): void {
+    this.heroesService.bloquearUsuario(id).subscribe( (resp) => {
+      if( resp === true ) {
+        this.popularTabla();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: '¡Usuario bloqueado!',
+          color: '#fff',
+          background: '#323232',
+        });
+      } else {
+        Swal.fire( {
+          icon: 'error',
+          title: 'Bloqueo incorrecto',
+          text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,
+          returnFocus: false
+        });
+      };
+    });
+  };
+
+  public reactivarUsuario(id: number): void {
+    this.heroesService.reactivarUsuario(id).subscribe( (resp) => {
+      if( resp === true ) {
+        this.popularTabla();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: '¡Usuario reactivado!',
+          color: '#fff',
+          background: '#323232',
+        });
+      } else {
+        Swal.fire( {
+          icon: 'error',
+          title: 'Reactivación incorrecta',
+          text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,
+          returnFocus: false
+        });
+      };
+    });
+  }
 };

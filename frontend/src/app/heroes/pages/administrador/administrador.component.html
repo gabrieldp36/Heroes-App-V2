@@ -43,7 +43,32 @@
         <!-- Bloquear/Reactivar Column -->
         <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef> Bloquear/Reactivar </th>
-            <td mat-cell *matCellDef="let row"> <button *ngIf="row.estado">X</button> </td>
+            <td mat-cell *matCellDef="let row">     
+                    
+                <button
+                    *ngIf="row.estado"
+                    mat-stroked-button
+                    mat-list-icon
+                    color="warn"
+                    style="border-radius: 20px; border: 0px;"
+                    (click)="bloquearUsuario(row.id)"
+                >
+                    <mat-icon>block</mat-icon>
+                    Bloquear
+                </button>
+
+                <button
+                    *ngIf="!row.estado"
+                    mat-stroked-button
+                    mat-list-icon
+                    color="accent"
+                    style="border-radius: 20px; border: 0px;"
+                    (click)="reactivarUsuario(row.id)"
+                >
+                    <mat-icon>autorenew</mat-icon>
+                    Reactivar
+                </button>
+            </td>
         </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

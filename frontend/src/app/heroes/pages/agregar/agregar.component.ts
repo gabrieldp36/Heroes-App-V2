@@ -18,6 +18,8 @@ import { ConfirmarComponent } from '../../components/confirmar/confirmar.compone
 
 import { RellenarCamposComponent } from '../../components/rellenar-campos/rellenar-campos.component';
 
+import { HeroeErrorComponent } from '../../components/heroe-error/heroe-error.component';
+
 import { Publisher, Publishers, Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({
@@ -138,10 +140,15 @@ export class AgregarComponent implements OnInit {
       // Crear héroe.
       this.heroe.id_usuario = this.authService.auth.id
       this.heroesService.agregarHeroe(this.heroe)
-      .subscribe( heroe => {
-        this.router.navigate(['heroes/editar', heroe.id]);
-        this.mostrarSnackBar('Héroe creado con éxito!');
-      });
+      .subscribe( {
+        next: (heroe) => {
+          this.router.navigate(['heroes/editar', heroe.id]);
+          this.mostrarSnackBar('Héroe creado con éxito!');
+        },
+        error: (err) => {
+          this.dialog.open(HeroeErrorComponent, {data:err.error.msg});
+        }
+      })
     };
   };
 

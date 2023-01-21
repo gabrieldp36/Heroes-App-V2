@@ -1,3 +1,26 @@
+
+/*//////////////////////////////////////////////////////////////////*/
+
+.btnEyeLogin {
+  background-image: url(../../../../assets/images/btnEyeLogin.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 15px;
+  width: 20px;
+  background-color: transparent;
+  margin-right: 8px;
+  border: 0;
+}
+
+.centerButtonEye {
+  display: flex; 
+  align-items: center;
+}
+
+.divInputGroup {
+  flex-wrap: nowrap !important;
+}
+
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 

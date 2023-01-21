@@ -77,13 +77,19 @@
 
                 <div class="wrap-input100">
                     <span class="label-input100">Password</span>
-                    <input 
-                        class="input100"
-                        type="password"
-                        formControlName="password" 
-                        placeholder="Ingrese su contraseña"
-                    >
-                    <span class="focus-input100"></span>
+                    <div class="input-group divInputGroup">
+                        <input 
+                            [type]="typeInputPassword"
+                            class="input100"
+                            type="password"
+                            formControlName="password"
+                            placeholder="Ingrese su contraseña"
+                        >
+                        <span class="focus-input100"></span>
+                        <div class="input-group-prepend centerButtonEye">
+                            <button class="btnEyeLogin" type="button" (click)="mostrarContrasena()"></button>
+                        </div>
+                    </div>
                 </div>
 
                 <div

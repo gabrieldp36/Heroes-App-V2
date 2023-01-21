@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegistroComponent  {
 
+  public typeInputPassword: string = 'password';
   public nombreApellidoPatron: RegExp = /^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$/i;
   public emailPatron: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,3})+$/;
   public passwordPatron: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
@@ -55,11 +56,11 @@ export class RegistroComponent  {
           position: 'top-end',
           showConfirmButton: false,
           timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
+          timerProgressBar: false,
+          // didOpen: (toast) => {
+          //   toast.addEventListener('mouseenter', Swal.stopTimer)
+          //   toast.addEventListener('mouseleave', Swal.resumeTimer)
+          // }
         });
         Toast.fire({
           icon: 'success',
@@ -76,5 +77,11 @@ export class RegistroComponent  {
         });
       };
     });
+  };
+
+  public mostrarContrasena():void {
+    (this.typeInputPassword === 'password') 
+        ? this.typeInputPassword = 'text' 
+          :  this.typeInputPassword ='password';
   };
 };

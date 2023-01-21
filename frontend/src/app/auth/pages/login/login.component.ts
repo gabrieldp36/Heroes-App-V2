@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
 
+  public typeInputPassword: string = 'password';
   public emailPatron: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,3})+$/;
 
   miFormulario: FormGroup = this.formBuilder.group({
@@ -51,11 +52,11 @@ export class LoginComponent {
           position: 'top-end',
           showConfirmButton: false,
           timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
+          timerProgressBar: false,
+          // didOpen: (toast) => {
+          //   toast.addEventListener('mouseenter', Swal.stopTimer)
+          //   toast.addEventListener('mouseleave', Swal.resumeTimer)
+          // }
         });
         Toast.fire({
           icon: 'success',
@@ -73,5 +74,11 @@ export class LoginComponent {
         });
       };
     });
+  };
+  
+  public mostrarContrasena():void {
+    (this.typeInputPassword === 'password') 
+        ? this.typeInputPassword = 'text' 
+          :  this.typeInputPassword ='password';
   };
 };

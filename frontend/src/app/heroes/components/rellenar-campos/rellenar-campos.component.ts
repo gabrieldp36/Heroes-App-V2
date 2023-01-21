@@ -9,11 +9,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   ]
 })
 export class RellenarCamposComponent  {
-
+  
   constructor ( private dialogRef: MatDialogRef<RellenarCamposComponent> ) {};
 
   cerrar(): void {
-
     this.dialogRef.close();
   };
 };

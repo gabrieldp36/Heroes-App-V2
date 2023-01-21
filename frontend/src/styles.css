@@ -212,7 +212,11 @@ body {
   border: 0;
 }
 
-.btnEye:hover {
+.btnEyeLogin:hover {
+  opacity: 0.80;
+}
+
+.btnEyeLogin:hover {
   opacity: 0.80;
 }
 

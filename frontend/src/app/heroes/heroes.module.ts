@@ -33,6 +33,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eliminar.component';
 import { PropiosComponent } from './pages/propios/propios.component';
 import { AdministradorComponent } from './pages/administrador/administrador.component';
+import { HeroeErrorComponent } from './components/heroe-error/heroe-error.component';
 
 @NgModule({
 
@@ -49,7 +50,8 @@ import { AdministradorComponent } from './pages/administrador/administrador.comp
     PerfilComponent,
     DialogEliminarComponent,
     PropiosComponent,
-    AdministradorComponent
+    AdministradorComponent,
+    HeroeErrorComponent
   ],
   imports: [
     CommonModule,

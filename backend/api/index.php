@@ -1022,7 +1022,8 @@
         // Realizamos la búsqueda de los comentarios.
         $sql = "SELECT c.id AS id_comentario, u.id, u.url_foto, u.nombre, c.descripcion 
                 FROM usuario u INNER JOIN comentario c 
-                ON c.id_usuario = u.id WHERE c.id_heroe = $id;";
+                ON c.id_usuario = u.id WHERE c.id_heroe = $id
+                ORDER BY c.id DESC;";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {
             print "Falló la consulta" . mysqli_error($link);

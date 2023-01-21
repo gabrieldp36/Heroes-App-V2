@@ -113,22 +113,22 @@ INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters
 ('Él - Magnus', 'Marvel Comics', 'Adam Warlock', 'Fantastic Four n.º 66', 'Adam Warlock', 'posee varios poderes y características sobrehumanas derivadas de su estructura genética artificial, como fuerza y resistencia aumentadas, así como la capacidad de transformar energía cósmica con diferentes efectos y usos', 'https://i.annihil.us/u/prod/marvel/i/mg/4/00/5c9d29256c960/clean.jpg' , 0, 3);
 
 INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
-(1,1, 'Batman el auténtico caballero de la noche!!'),
-(2,1, '¿Qué le regaló batman a su mamá en su cumpleaños? Una Bati-Dora...'),
-(3,1, 'El batman de crónica... El mejor de todo los tiempos!!'),
-(4,1, 'No naciste para morir siendo igual que los demás...'),
-(5,1, 'El más flojito... Wolverine se lo morfa...'),
 (6,1, 'The GOAT...'),
 (7,1, 'Nuestra mayor gloria no consiste en no caer nunca... sino en caer y levantarnos constantemente'),
 (8,1, 'Smoke Machine!'),
 (9,1, 'Muy buen héroe, buen aporte.'),
-(10,1, 'No te la bancas batman...');
+(10,1, 'No te la bancas batman...'),
+(4,1, 'No naciste para morir siendo igual que los demás...'),
+(5,1, 'El más flojito... Wolverine se lo morfa...'),
+(3,1, 'El batman de crónica... El mejor de todo los tiempos!!'),
+(1,1, 'Batman el auténtico caballero de la noche!!'),
+(2,1, '¿Qué le regaló batman a su mamá en su cumpleaños? Una Bati-Dora...');
 
 INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
 (1,2, 'Superman el más groso!!'),
-(2,2, 'Kryptonita...'),
+(8,2, 'Kryptonita...'),
 (4,2, 'Todo gran poder conlleva una gran responsabilidad'),
-(8,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
+(2,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
 
 COMMIT;
 

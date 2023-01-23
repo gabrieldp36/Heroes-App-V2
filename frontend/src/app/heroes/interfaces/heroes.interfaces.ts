@@ -20,3 +20,17 @@ export interface Publishers {
     id: string,
     desc: string
 };
+
+export interface Comentario {
+    id_comentario: number,
+    id_usuario: number,
+    url_foto: string,
+    nombre: string,
+    descripcion: string,
+};
+
+export interface ComentarioPost {
+    id_usuario: number,
+    id_heroe: number,
+    comentario: string,
+};

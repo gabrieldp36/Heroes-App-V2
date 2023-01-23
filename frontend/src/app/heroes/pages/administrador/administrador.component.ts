@@ -157,5 +157,5 @@ export class AdministradorComponent implements OnInit, AfterViewInit {
         });
       };
     });
-  }
+  };
 };

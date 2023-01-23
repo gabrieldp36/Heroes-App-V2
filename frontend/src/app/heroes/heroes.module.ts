@@ -34,6 +34,7 @@ import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eli
 import { PropiosComponent } from './pages/propios/propios.component';
 import { AdministradorComponent } from './pages/administrador/administrador.component';
 import { HeroeErrorComponent } from './components/heroe-error/heroe-error.component';
+import { EliminarComentarioComponent } from './components/eliminar-comentario/eliminar-comentario.component';
 
 @NgModule({
 
@@ -51,7 +52,8 @@ import { HeroeErrorComponent } from './components/heroe-error/heroe-error.compon
     DialogEliminarComponent,
     PropiosComponent,
     AdministradorComponent,
-    HeroeErrorComponent
+    HeroeErrorComponent,
+    EliminarComentarioComponent
   ],
   imports: [
     CommonModule,

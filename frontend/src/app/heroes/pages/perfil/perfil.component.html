@@ -156,7 +156,10 @@
                         <button class="btn btn-outline-dark btnGuardarCambios" 
                                 type="submit" 
                                 [disabled]="miFormulario.invalid">
-                            <span> Actulizar Perfil </span>
+                                <span class="centrarIcon">
+                                    <mat-icon>autorenew</mat-icon>
+                                    Actualizar
+                                </span>
                         </button>
                     </div>
 
@@ -175,7 +178,10 @@
                                 type="button" 
                                 (click)="eliminarUsuario()"
                             >
-                                Eliminar
+                                <span class="centrarIcon">
+                                    <mat-icon>delete</mat-icon>
+                                    Eliminar
+                                </span>
                             
                             </button>
                         </div>

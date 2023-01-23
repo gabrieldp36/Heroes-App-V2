@@ -8,7 +8,7 @@ import { tap, map, switchMap,  catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { Heroe } from '../interfaces/heroes.interfaces';
+import { Heroe, Comentario, ComentarioPost } from '../interfaces/heroes.interfaces';
 
 import { Usuario, AuthResponse } from '../../auth/interfaces/auth.interfaces';
 
@@ -26,7 +26,7 @@ export class HeroesService {
     private authService: AuthService
   ) {};
 
-  /************API USUARIOS *************/
+  /************API USUARIOS*************/
 
   public popularFormulario(): Observable<Boolean> {
     if( localStorage.getItem('token') ) {
@@ -108,7 +108,7 @@ export class HeroesService {
     );
   };
 
-  /************API HÉROES *************/
+  /************API HÉROES*************/
 
   public getHeroes(): Observable<Heroe[]> {
     return this.http.get<Heroe[]>(`${this.baseUrl}/heroes`);
@@ -153,5 +153,23 @@ export class HeroesService {
 
   public borrarHeroe(id: number): Observable<{}> {
     return this.http.delete<{}>(`${this.baseUrl}/heroes/${id}`);
+  };
+
+  /************API COMENTARIOS*************/
+
+  public getComentarios(idHeroe: number): Observable<Comentario[]> {
+    return this.http.get<Comentario[]>(`${this.baseUrl}/comentarios/${idHeroe}`);
+  };
+
+  public agregarComentario(comentario:ComentarioPost): Observable<boolean>  { 
+    return this.http.post(`${this.baseUrl}/comentarios`, comentario)
+    .pipe(
+      map( (_) => true),
+      catchError( err => of(err.error.msg) ),
+    );
+  };
+
+  public borrarComentario(id: number): Observable<[]> {
+    return this.http.delete<[]>(`${this.baseUrl}/comentarios/${id}`);
   };
 };

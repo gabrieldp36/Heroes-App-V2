@@ -1046,52 +1046,7 @@
         outputJson($data);
     }
 
-
-    /***********************************ELIMINAR COMENTARIO******************************************/
-
-    function deleteComentarios($id) {
-        // Esta petición requiere el envío de un token válido.
-        $payload = requiereAutorizacion();
-        //Validamos que se indique el id del comentario a eliminar.
-        if(!$id) {
-            outputError(400, "Por favor indique el id del comentario que desea eliminar");
-        }
-        // Convertimos id a integer.
-        settype($id, 'integer');
-        // Establecemos conexión con la base de datos.
-        $link = conectarBD();
-        // Validamos si existe un comentario con el id enviado.
-        $sql = "SELECT id FROM comentario where id = $id";
-        $resultado = mysqli_query($link, $sql);
-        if($resultado === false) {
-            print "Falló la consulta" . mysqli_error($link);
-            outputError(500);
-        }
-        if( mysqli_num_rows($resultado) == 0 ) {
-            outputError(404, "No existe un comentario con el id ingresado");
-        }
-        $fila = mysqli_fetch_assoc($resultado);
-        // Verificamos que el token sea propio (un usuario sólo puede eliminar comentarios propios).
-        // En caso de no ser un comentario propio, corroboramos que el token sea de un administrador.
-        if( $payload->id != $id ) {
-            if( ($payload->admin+=0) != 1) {
-                outputError(401, "Sólo un administrador puede eliminar comentarios ajenos.");
-            }
-        };
-        // Limpiamos de memoria la consulta que acabamos de realizar.
-        mysqli_free_result($resultado);
-        // Borramos al héroe de la base de datos.
-        $sql = "DELETE FROM comentario WHERE id = $id";
-        $resultado = mysqli_query($link, $sql);
-        if($resultado === false) {
-            print "Falló la consulta" . mysqli_error($link);
-            outputError(500);
-        }
-        mysqli_close($link);
-        outputJson([], 202);
-    }
-
-   /************************************CREACIÓN DE HÉROES***************************************/
+   /************************************CREACIÓN DE COMENTARIOS***************************************/
 
     function postComentarios() { 
         // Se requiere el envío de un token válido.
@@ -1154,3 +1109,39 @@
         mysqli_close($link);
         outputJson(['id' => $id], 201);
     };
+
+
+    /***********************************ELIMINAR COMENTARIO******************************************/
+
+    function deleteComentarios($id) {
+        // Esta petición requiere el envío de un token válido.
+        $payload = requiereAutorizacion();
+        //Validamos que se indique el id del comentario a eliminar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del comentario que desea eliminar");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Validamos si existe un comentario con el id enviado.
+        $sql = "SELECT id FROM comentario where id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0 ) {
+            outputError(404, "No existe un comentario con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Borramos al héroe de la base de datos.
+        $sql = "DELETE FROM comentario WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        mysqli_close($link);
+        outputJson([], 202);
+    }

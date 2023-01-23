@@ -65,17 +65,17 @@ INSERT INTO usuario (nombre, correo,  `password`, url_foto, `admin`, estado) VAL
 ('Spike Spiegel', 'admin@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://imgix.ranker.com/user_node_img/50088/1001742623/original/whatever-happens-photo-u1?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=650', 1, 1),
 ('Hitokiri Battousai', 'admin2@gmail.com', '$2y$10$tvWBr8/NRDZewj.BZxh5xOq4dHiBSduo8PIQZJBoeCAkZ7vBniQEm', 'https://somoskudasai.com/wp-content/uploads/2022/12/portada_rurouni-kenshin-6.jpg', 1, 1),
 ('Rogelio Pérez', 'rogelio@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Paula Pratt', 'pau@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1581403341630-a6e0b9d2d257?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Manuel Rodríguez', 'manu@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1'),
-('Carolina Gómez', 'caro@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=489&q=80', '0', '1'),
-('Valentina Taboada', 'valen@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', 'https://images.unsplash.com/photo-1526510747491-58f928ec870f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Martín Palermo', 'martin@gmail.com', '$2y$10$lo.IkdTxJzGE/3QzjzMpTOn92Wzg2uHgLLkDf9sS8xcxHBRm556Hu', '', '0', '1'),
-('Tomás Canaletti', 'tomas@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Paulo Juez', 'paulo@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Lionel Ricardo', 'lionel@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Martina Alonzo', 'martu@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1554423443-d9b73c9b7ced?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=518&q=80', '0', '1'),
-('Delfina Sanz', 'delfi@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
-('Pia Marín', 'pia@gmail.com', '$2y$10$g.ARYFlCvYsyZ3/4T8Mjc.0MuqxoFskLa/tKl7nclzheYoqS/yMhK', '', '0', '1');
+('Paula Pratt', 'pau@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1581403341630-a6e0b9d2d257?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Manuel Rodríguez', 'manu@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', '', '0', '1'),
+('Carolina Gómez', 'caro@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=489&q=80', '0', '1'),
+('Valentina Taboada', 'valen@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1526510747491-58f928ec870f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Martín Palermo', 'martin@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', '', '0', '1'),
+('Tomás Canaletti', 'tomas@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Paulo Juez', 'paulo@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Lionel Ricardo', 'lionel@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Martina Alonzo', 'martu@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1554423443-d9b73c9b7ced?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=518&q=80', '0', '1'),
+('Delfina Sanz', 'delfi@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', '0', '1'),
+('Pia Marín', 'pia@gmail.com', '$2y$10$jNJW.psoxBgXHmndgnlD0uguwBA22ru7pwkcu8B1rN5r58aySeG9q', '', '0', '1');
 
 INSERT INTO heroe (superhero, publisher, alter_ego, first_appearance, characters, habilities, alt_img, assets_img, id_usuario) VALUES
 ('Batman', 'DC Comics', 'Bruce Wayne', 'Detective Comics #27', 'Bruce Wayne', 'detective, intelecto nivel genio, brillante estratega y acróbata experto, dominio de artes marciales y técnicas de sigilo e intimidación, escapismo, uso de equipamiento, dispositivos y armamento de alta tecnología', '' , 1, 1 ),
@@ -131,4 +131,3 @@ INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
 (2,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
 
 COMMIT;
-

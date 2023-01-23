@@ -131,3 +131,4 @@ INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
 (2,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
 
 COMMIT;
+

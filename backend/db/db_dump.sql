@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS comentario (
 	id INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_usuario INTEGER(11) NOT NULL,
 	id_heroe INTEGER(11) NOT NULL,
-	descripcion TEXT,
+	descripcion VARCHAR(135) NOT NULL,
     CONSTRAINT FOREIGN KEY fk_usuario_comentario(id_usuario) REFERENCES usuario(id),
     CONSTRAINT FOREIGN KEY fk_heroe_comentario(id_usuario) REFERENCES heroe(id)
 );
@@ -131,4 +131,3 @@ INSERT INTO comentario (id_usuario, id_heroe, descripcion) VALUES
 (2,2, 'Lo peor de ser fuerte es que nadie te pregunta si estás bien... Crack');
 
 COMMIT;
-

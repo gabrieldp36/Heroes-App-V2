@@ -1046,6 +1046,48 @@
         outputJson($data);
     }
 
+    /***********************************CONSULTAR COMENTARIO EN PARTICULAR***************************************/
+
+     function getParticularesConParametros($id) {
+        // Esta petición requiere el envío de un token válido.
+        $payload = requiereAutorizacion();
+        //Validamos que se indique el id del héroe cuyos conmentarios se deseean consultar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del comentario");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Conectamos con la Base de datos.
+        $link = conectarBD();
+        // Definimos juego de caracteres.
+        mysqli_set_charset($link, "utf8");
+        // Realizamos consulta.
+        $sql = "SELECT id FROM comentario WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un comentario con el id ingresado.");
+        }
+        mysqli_free_result($resultado);
+        // Realizamos la búsqueda de los comentarios.
+        $sql = "SELECT c.id, c.descripcion FROM comentario c WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        //Extraemos la información que arroja la consulta.
+        $data = mysqli_fetch_assoc($resultado);
+        settype($data['id'], 'integer');
+        // Enviamos la información.
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($data);
+    }
+
    /************************************CREACIÓN DE COMENTARIOS***************************************/
 
     function postComentarios() { 
@@ -1110,6 +1152,53 @@
         outputJson(['id' => $id], 201);
     };
 
+
+    /************************************CREACIÓN DE COMENTARIOS***************************************/
+
+    function patchComentarios($id) { 
+        // Se requiere el envío de un token válido.
+        requiereAutorizacion();
+        //Validamos que se indique el id del héroe a actualizar.
+        if(!$id) {
+            outputError(400, "Por favor indique el id del comentario que desea actualizar");
+        }
+        // Convertimos id a integer.
+        settype($id, 'integer');
+        // Obtenemos la info que es enviada en el body de la request.
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        // Revisamos que el formato sea correcto.
+        if (json_last_error()) {
+            outputError(400, "El formato de datos es incorrecto");
+        };
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Realizamos una consulta para validar que se envíe el id de un comentario registrado.
+        $sql = "SELECT id FROM comentario WHERE id = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
+        if( mysqli_num_rows($resultado) == 0) {
+            outputError(404, "No se ha encontrado un comentario con el id ingresado");
+        }
+        mysqli_free_result($resultado);
+        // Validamos la información.
+        if( !isset($data['comentario']) || trim($data['comentario']) == "" || $data['comentario'] == null ) {
+            outputError(400, "El comentario es obligatorio.");
+        };
+        // Sanitizamos la información recibida.
+        $comentario = trim(mysqli_real_escape_string($link, $data['comentario']));
+        // Guardamos al usuario en base de datos.
+        $sql = "UPDATE comentario SET descripcion = '$comentario' WHERE id = $id";
+        $result = mysqli_query($link, $sql);
+        if ($result === false) {
+            outputError( 500, "Falló la consulta: " . mysqli_error($link));
+        };
+        $id = mysqli_insert_id($link);
+        mysqli_close($link);
+        outputJson(['ok' => true], 201);
+    };
 
     /***********************************ELIMINAR COMENTARIO******************************************/
 

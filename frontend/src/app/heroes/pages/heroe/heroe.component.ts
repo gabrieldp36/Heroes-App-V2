@@ -28,7 +28,7 @@ import { ValidatorService } from '../../validators/validator.service';
 
 import { EliminarComentarioComponent } from '../../components/eliminar-comentario/eliminar-comentario.component';
 
-import { Heroe, Comentario, ComentarioPost } from '../../interfaces/heroes.interfaces';
+import { Heroe, Comentario, ComentarioPost, ComentarioPorId } from '../../interfaces/heroes.interfaces';
 
 @Component({
   selector: 'app-heroe',
@@ -77,6 +77,7 @@ export class HeroeComponent implements OnInit, AfterViewInit {
   public mostrarComentarios: boolean = false;
   public displayedColumns: string[] = ['url_foto', 'nombre', 'descripcion', 'eliminar'];
   public dataSource!: MatTableDataSource<Comentario>;
+  public comentario: ComentarioPorId = {}
 
   // Formulario Comentarios.
 
@@ -192,48 +193,98 @@ export class HeroeComponent implements OnInit, AfterViewInit {
     };
   };
 
-  /*******AGREGAR COMENTARIOS *******/
+  /*******AGREGAR Y ACTUALIZAR COMENTARIOS *******/
 
-  public agregarComentario(): void {
-    
-    const body: ComentarioPost = {
-      id_usuario: this.userId,
-      id_heroe: this.heroe.id,
-      comentario: this.miFormulario.value.descripcion,
-    };
-
-    this.heroesService.agregarComentario(body).subscribe( resp => {
-      if (resp) {
-        this.popularTabla();
-        this.miFormulario.reset({descripcion: ''})
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          },
-        });
-        Toast.fire({
-          icon: 'success',
-          title: '¡Comentario agregado!',
-          color: '#fff',
-          background: '#323232',
-        });
-      } else {
-        Swal.fire( {
-          icon: 'error',
-          title: 'Incorporación incorrecta',
-          text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,    
-          color: '#fff',
-          background: '#323232',
-          confirmButtonColor: '#F9BA41',
-          returnFocus: false
-        });
+  public agregarActualizarComentario(): void {
+    if(this.comentario?.id) {
+      const body = {
+        comentario: this.miFormulario.value.descripcion
       };
+      this.heroesService.actualizarComentario(this.comentario.id, body)
+      .subscribe( resp => {
+        if (resp === true) {
+          this.popularTabla();
+          this.comentario = {};
+          this.miFormulario.reset({descripcion: ''})
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: '¡Comentario actualizado!',
+            color: '#fff',
+            background: '#323232',
+          });
+        } else {
+          Swal.fire( {
+            icon: 'error',
+            title: 'Actualización incorrecta',
+            text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,    
+            color: '#fff',
+            background: '#323232',
+            confirmButtonColor: '#F9BA41',
+            returnFocus: false
+          });
+        };
+      });
+
+    } else {
+      const body: ComentarioPost = {
+        id_usuario: this.userId,
+        id_heroe: this.heroe.id,
+        comentario: this.miFormulario.value.descripcion,
+      };
+      this.heroesService.agregarComentario(body).subscribe( resp => {
+        if (resp === true) {
+          this.popularTabla();
+          this.miFormulario.reset({descripcion: ''})
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: '¡Comentario agregado!',
+            color: '#fff',
+            background: '#323232',
+          });
+        } else {
+          Swal.fire( {
+            icon: 'error',
+            title: 'Incorporación incorrecta',
+            text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,    
+            color: '#fff',
+            background: '#323232',
+            confirmButtonColor: '#F9BA41',
+            returnFocus: false
+          });
+        };
+      });
+    };
+  };
+
+  public obtenerComentario(id: number):void {
+    this.heroesService.getComentarioPorId(id).subscribe({
+      next: (comentario) => { 
+        this.comentario = comentario;
+        this.miFormulario.setValue({descripcion: comentario?.descripcion || ''});
+      },
+      error: (err) => { console.error(err)},
     });
   };
 

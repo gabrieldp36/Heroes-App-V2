@@ -34,3 +34,8 @@ export interface ComentarioPost {
     id_heroe: number,
     comentario: string,
 };
+
+export interface ComentarioPorId {
+    id?: number,
+    descripcion?: string,
+};

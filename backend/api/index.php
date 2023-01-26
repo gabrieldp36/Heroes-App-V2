@@ -877,6 +877,12 @@
         // Limpiamos de memoria la consulta que acabamos de realizar.
         mysqli_free_result($resultado);
         // Borramos al héroe de la base de datos.
+        $sql = "DELETE FROM comentario WHERE id_heroe = $id";
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        }
         $sql = "DELETE FROM heroe WHERE id = $id";
         $resultado = mysqli_query($link, $sql);
         if($resultado === false) {

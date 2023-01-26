@@ -116,6 +116,12 @@
                             </div> 
                         </div>
                         <span 
+                            class="colorOk"
+                            *ngIf="!validatorService.validarCampos( miFormulario, 'password', 'pattern')"
+                        > 
+                            En blanco para mantener la contraseña
+                        </span>
+                        <span 
                             *ngIf="validatorService.validarCampos( miFormulario, 'password', 'pattern')"
                             class="spanError"
                         >

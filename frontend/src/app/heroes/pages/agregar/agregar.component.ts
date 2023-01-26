@@ -2,13 +2,15 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { MatDialog } from '@angular/material/dialog';;
+import { MatDialog } from '@angular/material/dialog';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { switchMap } from 'rxjs/operators';
 
 import { of } from 'rxjs';
+
+import Swal from 'sweetalert2';
 
 import { AuthService } from '../../../auth/services/auth.service';
 
@@ -164,6 +166,23 @@ export class AgregarComponent implements OnInit {
     .pipe( switchMap( (result) => (result) ? this.heroesService.borrarHeroe(this.heroe.id!) : of(false) ) )
     .subscribe( resp => {
       if (resp !== false) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: '¡Héroe eliminado!',
+          color: '#fff',
+          background: '#323232',
+        });
         this.router.navigate(['heroes/listado']);
       };
     });

@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS comentario (
 	id_heroe INTEGER(11) NOT NULL,
 	descripcion VARCHAR(135) NOT NULL,
     CONSTRAINT FOREIGN KEY fk_usuario_comentario(id_usuario) REFERENCES usuario(id),
-    CONSTRAINT FOREIGN KEY fk_heroe_comentario(id_usuario) REFERENCES heroe(id)
+    CONSTRAINT FOREIGN KEY fk_heroe_comentario(id_heroe) REFERENCES heroe(id)
 );
 
 -- INSERTS INICIALES.

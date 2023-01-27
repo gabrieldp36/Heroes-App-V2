@@ -896,7 +896,6 @@
     /******************************************BUSCAR HÉROES**********************************************/
 
     function getBuscar() {
-
         // Esta petición requiere el envío de un token válido.
         requiereAutorizacion();
         // Establecemos conexión con la base de datos.
@@ -998,6 +997,40 @@
         mysqli_close($link);
         outputJson($data);
     }
+
+
+    /*************************************CONSULTAR TODOS LOS COMENTARIOS*****************************************/
+
+    function getComentarios() {
+        // Esta petición requiere el envío de un token válido.
+        requiereAutorizacion();
+        // Establecemos conexión con la base de datos.
+        $link = conectarBD();
+        // Realizamos consulta.
+        $sql = "SELECT c.id, u.nombre, h.superhero, c.descripcion FROM usuario u
+                INNER JOIN comentario c ON c.id_usuario = u.id
+                INNER JOIN heroe h ON h.id = c.id_heroe
+                ORDER BY c.id DESC";  
+        $resultado = mysqli_query($link, $sql);
+        if($resultado === false) {
+            print "Falló la consulta" . mysqli_error($link);
+            outputError(500);
+        };
+        //Extraemos la información que arroja la consulta.
+        $data= [];
+        while( $fila = mysqli_fetch_assoc($resultado) ) {
+            $data[] = [
+                'id' => $fila['id']+=0,
+                'nombre' => $fila['nombre'],
+                'superhero' => $fila['superhero'],
+                'descripcion' => $fila['descripcion'],
+            ];
+        };
+        // Enviamos la información.
+        mysqli_free_result($resultado);
+        mysqli_close($link);
+        outputJson($data);
+    };
 
     /******************************************CONSULTAR COMENTARIOS**********************************************/
 

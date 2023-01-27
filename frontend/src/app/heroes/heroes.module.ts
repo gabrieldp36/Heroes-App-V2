@@ -37,6 +37,7 @@ import { HeroeErrorComponent } from './components/heroe-error/heroe-error.compon
 import { EliminarComentarioComponent } from './components/eliminar-comentario/eliminar-comentario.component';
 import { TableAdministradorComponent } from './components/table-administrador/table-administrador.component';
 import { TableAdminHeroesComponent } from './components/table-admin-heroes/table-admin-heroes.component';
+import { TableAdminComentariosComponent } from './components/table-admin-comentarios/table-admin-comentarios.component';
 
 @NgModule({
 
@@ -57,7 +58,8 @@ import { TableAdminHeroesComponent } from './components/table-admin-heroes/table
     HeroeErrorComponent,
     EliminarComentarioComponent,
     TableAdministradorComponent,
-    TableAdminHeroesComponent
+    TableAdminHeroesComponent,
+    TableAdminComentariosComponent
   ],
   imports: [
     CommonModule,

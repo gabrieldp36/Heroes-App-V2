@@ -124,7 +124,7 @@ export class HeroeComponent implements OnInit, AfterViewInit {
   };
 
     /****OBTENEMOS INFORMACIÓN PARA MOSTRAR CONDICIONALMENTE 
-      EL BOTÓN EDITAR  HÉROE O ELIMINAR COMENTARIO   
+      EL BOTÓN EDITAR HÉROE O ELIMINAR/EDITAR COMENTARIO   
     ****/
 
   public getHeroesPropios(): void {

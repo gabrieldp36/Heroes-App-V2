@@ -39,3 +39,10 @@ export interface ComentarioPorId {
     id?: number,
     descripcion?: string,
 };
+
+export interface ComentarioAdmin {
+    id: number,
+    nombre: string,
+    superhero: string;
+    descripcion: string,
+};

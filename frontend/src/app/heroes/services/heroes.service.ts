@@ -8,7 +8,7 @@ import { tap, map, switchMap,  catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { Heroe, Comentario, ComentarioPost, ComentarioPorId } from '../interfaces/heroes.interfaces';
+import { Heroe, Comentario, ComentarioPost, ComentarioPorId, ComentarioAdmin } from '../interfaces/heroes.interfaces';
 
 import { Usuario, AuthResponse } from '../../auth/interfaces/auth.interfaces';
 
@@ -159,6 +159,10 @@ export class HeroesService {
 
   public getComentarios(idHeroe: number): Observable<Comentario[]> {
     return this.http.get<Comentario[]>(`${this.baseUrl}/comentarios/${idHeroe}`);
+  };
+
+  public getComentariosAdmin(): Observable<ComentarioAdmin[]> {
+    return this.http.get<ComentarioAdmin[]>(`${this.baseUrl}/comentarios`);
   };
 
   public agregarComentario(comentario:ComentarioPost): Observable<boolean>  { 

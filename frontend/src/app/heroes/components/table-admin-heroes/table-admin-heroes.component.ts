@@ -40,7 +40,7 @@ export class TableAdminHeroesComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  public displayedColumns: string[] = ['foto', 'nombre', 'alter_ego', 'acciones'];
+  public displayedColumns: string[] = ['foto', 'superhero', 'alter_ego', 'acciones'];
   public dataSource!: MatTableDataSource<Heroe>;
 
   constructor (

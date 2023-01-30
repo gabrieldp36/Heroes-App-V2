@@ -73,21 +73,21 @@
         </mat-nav-list>
     </mat-sidenav>
 
-    <mat-toolbar style="box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.21), 0px 0px 0px 3px rgba(0, 0, 0, 0.24);">
-
+    <mat-toolbar class="toolbarShadow">
         <button 
             mat-icon-button
             (click)="sidenav.toggle()"
             onclick="blur()"
+            id="hamburguerIcon"
         >
             <mat-icon>menu</mat-icon>
         </button>
 
-        <h1 style="margin-left: 5px;"> Héroes App </h1>
+        <img src="../../../../assets/images/logoChico.png" class="logoChico" alt="">
 
         <span class="spacer"></span>
 
-        <h1 style="margin-left: 5px; color: #5dcebc;" class="hiddenElement"> {{usuario.nombre | titlecase}} </h1>
+        <h1 class="nombreUsuario hiddenElement"> {{usuario.nombre | titlecase}} </h1>
 
         <div class="nav-item divIMGLogued">
             <div class="lineaVertical hiddenElement"></div>
@@ -102,7 +102,7 @@
             mat-stroked-button
             mat-list-icon
             color="warn"
-            style="border-radius: 20px; margin-right: 10px; border-color: #212121;"
+            class="btnLogut"
             (click)="logout()"
         >
             <mat-icon>logout</mat-icon>
@@ -114,5 +114,55 @@
     <div class="containers">
         <router-outlet></router-outlet>
     </div>
-
+    
+    <footer class="footerBG">
+        <div class="divLogo">
+          <img src="../../../../assets/images/logo.png" class="footerLogo" >
+        </div>
+        <div class="container">
+          <div class="row divNavPills">
+            <div class="col-md-12">
+              <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a 
+                        class="nav-link anchorNavPillsFooter" 
+                        href="https://www.linkedin.com/in/dominguezprado/" 
+                        target="_blank"
+                    >
+                        <span class="centrarIcon">
+                            <mat-icon class="marginIcon">work</mat-icon>
+                            LinkedIn
+                        </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link anchorNavPillsFooter" href="https://github.com/gabrieldp36" target="_blank">
+                        <span class="centrarIcon">
+                            <mat-icon class="marginIcon">code</mat-icon>
+                            Github
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a 
+                        class="nav-link anchorNavPillsFooter" 
+                        href="mailto:gabrieldominguezprado@gmail.com?subject=Consulta Heroes App"
+                    >
+                        <span class="centrarIcon">
+                            <mat-icon class="marginIcon" herf="">mail</mat-icon>
+                            Contacto
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                  <p class="nav-link derechosReservadosFooter">
+                   <span class="marginNombre">Gabriel Domínguez Prado</span> 
+                   <i>© 2023 Todos los Derechos Reservados.</i>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div> 
+        </div>
+    </footer>
 </mat-sidenav-container>

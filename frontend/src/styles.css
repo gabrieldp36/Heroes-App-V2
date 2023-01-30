@@ -66,6 +66,32 @@ body {
   padding-bottom: 50px;
 }
 
+/************************************TOOLBAR***************************************/
+
+#hamburguerIcon:hover {
+  color: #69f0ae !important;
+}
+
+.logoChico {
+  max-width: 170px; 
+  margin-left: 25px;
+}
+
+.toolbarShadow {
+  box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.21), 0px 0px 0px 3px rgba(0, 0, 0, 0.24) !important;
+}
+
+.nombreUsuario {
+  margin-left: 5px; 
+  color: #5dcebc;
+}
+
+.btnLogut {
+  border-radius: 20px !important; 
+  margin-right: 10px !important; 
+  border: 0px !important;
+}
+
 /************************************SWEET ALERT***************************************/
 
 .swal2-styled.swal2-confirm {
@@ -358,8 +384,68 @@ body {
  color: #69f0ae
 }
 
+/************************************FOOTER**********************************/
+
+.footerBG {
+  background: #212121; 
+  height: auto; 
+  margin-top: 100px; 
+}
+
+.divLogo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding-top: 0.7rem;
+}
+
+.footerLogo {
+  width: 90%;
+  max-width: 480px;
+  height: 100%;
+}
+
+.divNavPills {
+  padding-bottom: 40px;
+}
+
+.anchorNavPillsFooter {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none !important;
+  color: var(--white) !important;
+}
+
+.anchorNavPillsFooter:hover {
+  color: #69f0ae !important;
+}
+
+.marginIcon {
+  margin-right: 10px !important;
+}
+
+.marginNombre {
+  margin-right: 30px;
+}
+
+.derechosReservadosFooter {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none !important;
+  color: var(--white) !important;
+}
 
 /************************************MEDIA QUERIES***************************************/
+
+@media (max-width: 480px) {
+  .logoChico {
+    display: none;
+  }
+}
 
 @media (max-width: 720px) {
   .hiddenElement {
@@ -368,7 +454,6 @@ body {
   .navBarAvatar {
     margin-right: 10px;
   }
-
   .containerPersonalizado {
     width: 100%;
     padding-right: var(--bs-gutter-x,0);

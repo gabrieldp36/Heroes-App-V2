@@ -31,7 +31,9 @@
               "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js"
+            ],
             "allowedCommonJsDependencies": ["sweetalert2"]
           },
           "configurations": {
@@ -101,7 +103,9 @@
               "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js"
+            ]
           }
         }
       }

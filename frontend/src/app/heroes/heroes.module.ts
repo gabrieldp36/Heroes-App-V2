@@ -31,13 +31,22 @@ import { ImagenPipe } from './pipes/imagen.pipe';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 
 import { DialogEliminarComponent } from './components/dialog-eliminar/dialog-eliminar.component';
+
 import { PropiosComponent } from './pages/propios/propios.component';
+
 import { AdministradorComponent } from './pages/administrador/administrador.component';
+
 import { HeroeErrorComponent } from './components/heroe-error/heroe-error.component';
+
 import { EliminarComentarioComponent } from './components/eliminar-comentario/eliminar-comentario.component';
+
 import { TableAdministradorComponent } from './components/table-administrador/table-administrador.component';
+
 import { TableAdminHeroesComponent } from './components/table-admin-heroes/table-admin-heroes.component';
+
 import { TableAdminComentariosComponent } from './components/table-admin-comentarios/table-admin-comentarios.component';
+
+import { ComentariosComponent } from './components/comentarios/comentarios.component';
 
 @NgModule({
 
@@ -59,7 +68,8 @@ import { TableAdminComentariosComponent } from './components/table-admin-comenta
     EliminarComentarioComponent,
     TableAdministradorComponent,
     TableAdminHeroesComponent,
-    TableAdminComentariosComponent
+    TableAdminComentariosComponent,
+    ComentariosComponent
   ],
   imports: [
     CommonModule,

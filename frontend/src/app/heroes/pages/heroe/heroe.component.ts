@@ -1,34 +1,22 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { MatTableDataSource } from '@angular/material/table';
-
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-
-import { MatSort } from '@angular/material/sort';
-
-import { MatDialog } from '@angular/material/dialog';
-
 import { switchMap } from 'rxjs/operators';
-
-import { of } from 'rxjs';
-
-import Swal from 'sweetalert2';
 
 import { HeroesService } from '../../services/heroes.service';
 
 import { AuthService } from '../../../auth/services/auth.service';
 
-import { ValidatorService } from '../../validators/validator.service';
+import { Heroe } from '../../interfaces/heroes.interfaces';
 
-import { EliminarComentarioComponent } from '../../components/eliminar-comentario/eliminar-comentario.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Heroe, Comentario, ComentarioPost, ComentarioPorId } from '../../interfaces/heroes.interfaces';
+import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import { ComentariosComponent } from '../../components/comentarios/comentarios.component';
 
 @Component({
   selector: 'app-heroe',
@@ -46,64 +34,41 @@ import { Heroe, Comentario, ComentarioPost, ComentarioPorId } from '../../interf
       .mat-background {
         background-color: #7b1fa2 !important;
       }
-      .tamaño-fuente {
-        font-size: 15px;
+      .mat-background.comentarios {
+        background-color: #5dcebc !important;
+        height: auto;
+        padding: 4px;
       }
-      table {
-        width: 100%;
-      }
-      .mat-mdc-form-field {
-        font-size: 15px;
-        width: 100%;
-      }
-      td, th {
-        width: 25%;
-      } 
     `
   ]
 })
-export class HeroeComponent implements OnInit, AfterViewInit {
+export class HeroeComponent implements OnInit {
 
   @ViewChild('imagen') imagenHeroe!:ElementRef<HTMLImageElement>;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   public error!: HttpErrorResponse;
   public heroe!: Heroe;
-  public heroeNombre: string = '';
   public adminUser: boolean = false;
   public userId: number = 0;
   public imgLoad: boolean = false;
   public heroesPropios: number[] = [];
-  public mostrarComentarios: boolean = false;
-  public displayedColumns: string[] = ['url_foto', 'nombre', 'descripcion', 'eliminar'];
-  public dataSource!: MatTableDataSource<Comentario>;
-  public comentario: ComentarioPorId = {}
-
-  // Formulario Comentarios.
-
-  public miFormulario: FormGroup = this.formBuilder.group({
-    descripcion: [ '', [Validators.required, Validators.maxLength(130)] ],
-  });
 
   constructor(
-    private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private heroesService: HeroesService,
-    public validatorService: ValidatorService,
     private router:Router,
-    private matPaginatorIntl: MatPaginatorIntl,
-    private dialog: MatDialog,
-  ) {};
+    private modalService: NgbModal,
+    private modalConfig: NgbModalConfig
+  ) {
+    this.modalConfig.backdrop = 'static';
+    this.modalConfig.keyboard = false;
+    this.modalConfig.size = 'xl';
+  };
 
   ngOnInit(): void {
     this.getHeroesPropios();
     this.esAdministrador();
     this.getHeroe();
-  };
-
-  public ngAfterViewInit() {
-    this.popularTabla();
   };
 
   /****BUSCAMOS LA INFORMACIÓN DEL HÉROE A MOSTRAR ****/
@@ -114,7 +79,6 @@ export class HeroeComponent implements OnInit, AfterViewInit {
     .subscribe( 
       (heroe) => {
         this.heroe = heroe;
-        this.heroeNombre = heroe.superhero;
       },
       (error) => {
         console.error(error);
@@ -123,9 +87,10 @@ export class HeroeComponent implements OnInit, AfterViewInit {
     );
   };
 
-    /****OBTENEMOS INFORMACIÓN PARA MOSTRAR CONDICIONALMENTE 
-      EL BOTÓN EDITAR HÉROE O ELIMINAR/EDITAR COMENTARIO   
-    ****/
+  /****
+    OBTENEMOS INFORMACIÓN PARA MOSTRAR CONDICIONALMENTE 
+    EL BOTÓN EDITAR HÉROE O ELIMINAR/EDITAR COMENTARIO   
+  ****/
 
   public getHeroesPropios(): void {
     this.heroesService.getHeroesPropiosIds().subscribe( (heroesIds) => {
@@ -145,197 +110,29 @@ export class HeroeComponent implements OnInit, AfterViewInit {
       };
     });
   };
-  
-  public esComentarioPropio(id:number): boolean {
-    return id == this.userId;
+
+  /****MODAL COMENTARIOS ****/
+
+  public comentarios():void {
+    const modalRef = this.modalService.open(ComentariosComponent);
+    modalRef.componentInstance.heroe = this.heroe;
+    modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.adminUser = this.adminUser;
   };
 
-  /******TABLA PARA MOSTRAR COMENTARIOS ******/
-
-  public popularTabla(): void {
-    this.activatedRoute.params
-    .pipe( switchMap( ( {id} ) => this.heroesService.getHeroesPorId( id ) ) )
-    .subscribe( 
-      (heroe) => {
-        this.heroesService.getComentarios(heroe.id).subscribe({
-          next: (comentarios) => { 
-            (comentarios.length > 0) ? this.mostrarComentarios = true :  this.mostrarComentarios = false;
-            this.dataSource = new MatTableDataSource(this.agregrarPlaceHolder(comentarios));
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.matPaginatorIntl.itemsPerPageLabel = 'Items por página';
-            this.matPaginatorIntl.nextPageLabel = 'Página siguiente';
-            this.matPaginatorIntl.previousPageLabel = 'Página anterior';
-          },
-          error: (err) => { console.error(err)},
-        });
-      },
-      (error) => {
-        console.error(error);
-        this.error = error;
-      },
-    );
-  };
-
-  public agregrarPlaceHolder(comentarios: Comentario[]): Comentario[] {
-    comentarios.map( (comentario: Comentario) => {
-      (!this.authService.esImgUrl(comentario.url_foto)) 
-          ? comentario.url_foto = '../../../assets/images/UserPlaceHolder.jpg' : '';
-    });
-    return comentarios
-  };
-
-  public applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    };
-  };
-
-  /*******AGREGAR Y ACTUALIZAR COMENTARIOS *******/
-
-  public agregarActualizarComentario(): void {
-    if(this.comentario?.id) {
-      const body = {
-        comentario: this.miFormulario.value.descripcion
-      };
-      this.heroesService.actualizarComentario(this.comentario.id, body)
-      .subscribe( resp => {
-        if (resp === true) {
-          this.popularTabla();
-          this.comentario = {};
-          this.miFormulario.reset({descripcion: ''})
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            },
-          });
-          Toast.fire({
-            icon: 'success',
-            title: '¡Comentario actualizado!',
-            color: '#fff',
-            background: '#323232',
-          });
-        } else {
-          Swal.fire( {
-            icon: 'error',
-            title: 'Actualización incorrecta',
-            text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,    
-            color: '#fff',
-            background: '#323232',
-            confirmButtonColor: '#F9BA41',
-            returnFocus: false
-          });
-        };
-      });
-
-    } else {
-      const body: ComentarioPost = {
-        id_usuario: this.userId,
-        id_heroe: this.heroe.id,
-        comentario: this.miFormulario.value.descripcion,
-      };
-      this.heroesService.agregarComentario(body).subscribe( resp => {
-        if (resp === true) {
-          this.popularTabla();
-          this.miFormulario.reset({descripcion: ''})
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            },
-          });
-          Toast.fire({
-            icon: 'success',
-            title: '¡Comentario agregado!',
-            color: '#fff',
-            background: '#323232',
-          });
-        } else {
-          Swal.fire( {
-            icon: 'error',
-            title: 'Incorporación incorrecta',
-            text: `${resp || 'Servidor momentáneamente fuera de servicio'}`,    
-            color: '#fff',
-            background: '#323232',
-            confirmButtonColor: '#F9BA41',
-            returnFocus: false
-          });
-        };
-      });
-    };
-  };
-
-  public obtenerComentario(id: number):void {
-    this.heroesService.getComentarioPorId(id).subscribe({
-      next: (comentario) => { 
-        this.comentario = comentario;
-        this.miFormulario.setValue({descripcion: comentario?.descripcion || ''});
-      },
-      error: (err) => { console.error(err)},
-    });
-  };
-
-  /*******BORRAR COMENTARIOS *******/
-
-  public borrarComentario(id: number) {
-    const dialog = this.dialog.open(EliminarComentarioComponent, {
-      width: '300px',
-      panelClass:['dialogConfirm'],
-    });
-    dialog.afterClosed()
-    .pipe( switchMap( (result) => (result) ? this.heroesService.borrarComentario(id) : of(false) ) )
-    .subscribe( resp => {
-      if (resp !== false) {
-        this.popularTabla();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          },
-        });
-        Toast.fire({
-          icon: 'success',
-          title: '¡Comentario eliminado!',
-          color: '#fff',
-          background: '#323232',
-        });
-      };
-    });
-  };
-
-  /***************************************/
-
-  irListado(): void {
+  public irListado(): void {
     this.router.navigate( ['/heroes/listado'] );
   };
 
-  irBuscador(): void {
+  public irBuscador(): void {
     this.router.navigate( ['/heroes/buscar'] );
   };
 
-  irEditar(): void {
+  public irEditar(): void {
     this.router.navigate( ['/heroes/editar', this.heroe.id] );
   };
 
-  onLoadImg(): void {
+  public onLoadImg(): void {
     this.imgLoad = true;
   };
 

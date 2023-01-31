@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-
 import { BrowserModule } from '@angular/platform-browser';
+
+import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -12,6 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { Interceptor } from './interceptor';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { MaterialModule } from './material/material.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +25,8 @@ import { Interceptor } from './interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    MaterialModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },

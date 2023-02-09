@@ -1,21 +1,12 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-
 import { MatTableDataSource } from '@angular/material/table';
-
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-
 import { MatSort } from '@angular/material/sort';
-
 import { MatDialog } from '@angular/material/dialog';
-
 import Swal from 'sweetalert2';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-
 import { Routes, RouterModule } from '@angular/router';
-
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -26,7 +24,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       onSameUrlNavigation: "ignore",
       anchorScrolling:"enabled",
-      scrollPositionRestoration: "enabled",
+      scrollPositionRestoration: "top",
     }),
   ],
   exports: [

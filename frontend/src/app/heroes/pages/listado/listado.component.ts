@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({

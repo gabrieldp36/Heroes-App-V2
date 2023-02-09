@@ -5,7 +5,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http'
   providedIn: 'root'
 })
 export class Interceptor implements HttpInterceptor {
-
+  
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     let token: string | null = localStorage.getItem('token');
     if (token) {

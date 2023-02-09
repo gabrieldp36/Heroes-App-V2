@@ -1,19 +1,10 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-
-import { Router } from '@angular/router'
-
 import { MatTableDataSource } from '@angular/material/table';
-
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-
 import { MatSort } from '@angular/material/sort';
-
 import Swal from 'sweetalert2';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { Usuario } from '../../../auth/interfaces/auth.interfaces';
 
 @Component({

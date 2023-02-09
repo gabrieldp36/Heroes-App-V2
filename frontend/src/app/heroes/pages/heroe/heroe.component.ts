@@ -1,21 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { switchMap } from 'rxjs/operators';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-
 import { ComentariosComponent } from '../../components/comentarios/comentarios.component';
 
 @Component({

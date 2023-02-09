@@ -26,6 +26,15 @@ body {
   --maximumYellow: #F9BA41;
 }
 
+.itemSideMenu:hover {
+  color: #69f0ae !important;
+}
+
+.active {
+  color: #69f0ae !important;
+  background-color: #494848 !important;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -56,9 +65,9 @@ body {
 
 .spinnerHeroeCard {
   height: 250px; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
+  display: flex !important; 
+  justify-content: center !important; 
+  align-items: center !important;
 }
 
 .tableComentarios {

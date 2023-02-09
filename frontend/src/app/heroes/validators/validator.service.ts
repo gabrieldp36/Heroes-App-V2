@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class ValidatorService {
         && miFormulario.get(campo)?.touched )
           ?  true : false;
   };
-
+  
   camposIguales(campo1: string, campo2: string) {
     return (miFormulario: AbstractControl): ValidationErrors | null => {
       const pass1: string = miFormulario.get(campo1)?.value;

@@ -1,33 +1,18 @@
 import { Component, AfterViewInit, Input, ViewChild } from '@angular/core';
-
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { MatTableDataSource } from '@angular/material/table';
-
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-
 import { MatSort } from '@angular/material/sort';
-
 import { MatDialog } from '@angular/material/dialog';
-
 import { switchMap } from 'rxjs/operators';
-
 import { of } from 'rxjs';
-
 import Swal from 'sweetalert2';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { ValidatorService } from '../../validators/validator.service';
-
 import { EliminarComentarioComponent } from '../../components/eliminar-comentario/eliminar-comentario.component';
-
 import { Heroe, Comentario, ComentarioPost, ComentarioPorId } from '../../interfaces/heroes.interfaces';
-
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

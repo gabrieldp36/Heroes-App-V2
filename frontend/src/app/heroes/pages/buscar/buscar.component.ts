@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({

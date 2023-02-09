@@ -1,29 +1,16 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { MatTableDataSource } from '@angular/material/table';
-
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-
 import { MatSort } from '@angular/material/sort';
-
 import { MatDialog } from '@angular/material/dialog';
-
 import { switchMap } from 'rxjs/operators';
-
 import { of } from 'rxjs';
-
 import Swal from 'sweetalert2';
-
 import { ValidatorService } from '../../validators/validator.service';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { EliminarComentarioComponent } from '../../components/eliminar-comentario/eliminar-comentario.component';
-
 import {ComentarioAdmin, ComentarioPorId } from '../../interfaces/heroes.interfaces';
-
 
 @Component({
   selector: 'app-table-admin-comentarios',

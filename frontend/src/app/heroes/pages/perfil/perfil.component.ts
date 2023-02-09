@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
-
 import { MatDialog } from '@angular/material/dialog';
-
 import Swal from 'sweetalert2';
-
 import { Usuario } from '../../../auth/interfaces/auth.interfaces';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { ValidatorService } from '../../validators/validator.service';
-
 import { DialogEliminarComponent } from '../../components/dialog-eliminar/dialog-eliminar.component';
 
 @Component({

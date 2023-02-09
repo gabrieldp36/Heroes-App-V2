@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, ViewChild, OnInit } from '@angular/core';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
 import { HeroesService } from '../../services/heroes.service';
 
@@ -38,7 +37,7 @@ export class HeroeTarjetaComponent implements OnInit {
     this.imagenHeroe.nativeElement.src = 'assets/no-image.png';
   };
 
-  onLoadImg(): void {
+  public onLoadImg(): void {
     this.imgLoad = true;
   };
 };

@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment} from '@angular/router';
-
 import { Observable } from 'rxjs';
-
 import { tap } from 'rxjs/operators';
-
 import Swal from 'sweetalert2';
-
 import { AuthService } from '../auth/services/auth.service';
 
 @Injectable({
@@ -23,6 +18,17 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if(!localStorage.getItem('token')) {
+      this.router.navigate(['auth/login']);
+      localStorage.clear()
+      Swal.fire( {
+        icon: 'warning',
+        title: 'Sesión inválida',
+        text: `Por favor inicie sesión`,
+        returnFocus: false
+      });
+      return false;
+    };
     return this.authService.verificaAutenticacion()
     .pipe( tap ( estaAutenticado => {
         if ( !estaAutenticado ) {
@@ -42,6 +48,17 @@ export class AuthGuard implements CanActivate, CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    if(!localStorage.getItem('token')) {
+      this.router.navigate(['auth/login']);
+      localStorage.clear()
+      Swal.fire( {
+        icon: 'warning',
+        title: 'Sesión no resgistrada',
+        text: `Por favor inicie sesión`,
+        returnFocus: false
+      });
+      return false;
+    };
     return this.authService.verificaAutenticacion()
     .pipe( tap ( estaAutenticado => {
         if ( !estaAutenticado ) {

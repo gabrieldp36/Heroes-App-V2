@@ -1,27 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router'
-
 import { MatDialog } from '@angular/material/dialog';
-
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { switchMap } from 'rxjs/operators';
-
 import { of } from 'rxjs';
-
 import Swal from 'sweetalert2';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
-
 import { RellenarCamposComponent } from '../../components/rellenar-campos/rellenar-campos.component';
-
 import { HeroeErrorComponent } from '../../components/heroe-error/heroe-error.component';
-
 import { Publisher, Publishers, Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({

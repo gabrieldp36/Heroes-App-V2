@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { AuthService } from '../../../auth/services/auth.service';
-
 import { HeroesService } from '../../services/heroes.service';
-
 import { Heroe } from '../../interfaces/heroes.interfaces';
 
 @Component({

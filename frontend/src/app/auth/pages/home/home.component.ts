@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styles: [
-
     `
     .card-fondo{
       background: rgba(0,0,0,0.2) !important;

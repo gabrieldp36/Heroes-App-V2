@@ -29,7 +29,7 @@
             <span style="margin-left: 2px;"> {{heroe.first_appearance}} </span>
             <br *ngIf="heroe.first_appearance && heroe.characters">
             <br *ngIf="heroe.first_appearance && heroe.characters">
-            <i *ngIf="heroe.characters">Personajes: </i> {{heroe.characters}}
+            <i *ngIf="heroe.characters">Personajes: </i> {{heroe.characters | titlecase}}
         </p>
     </mat-card-content>
     

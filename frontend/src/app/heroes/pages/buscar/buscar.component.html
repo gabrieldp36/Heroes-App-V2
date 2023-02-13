@@ -42,7 +42,7 @@
                                 #auto="matAutocomplete"
                                 (optionSelected)="mostrarHeroe($event)">
                                 <mat-option *ngFor="let heroe of heroes" [value]="heroe">            
-                                    {{heroe.superhero}}                                   
+                                    {{heroe.superhero | titlecase}}                                   
                                 </mat-option>
                                 <mat-option value="" *ngIf="sinResultados && termino.length > 0 ">                                     
                                     <i> Sin resultados </i>                               

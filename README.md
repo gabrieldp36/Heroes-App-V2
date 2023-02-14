@@ -31,6 +31,7 @@ Por último, desde la consola, estando posicionado en la carpeta fronted 'xampp/
 npm install
 ```
 
+
 ```
 ng serve -o
 ```

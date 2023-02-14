@@ -18,19 +18,18 @@ A continuación les copio el link a la documentación del backend que sirve de g
 
 Este proyecto fue generado con [Angular CLI] versión 13.3.12.
 
-Recuerden reconstruir los módulos de Node:
-
-```
-npm install
-```
-
-Y luego, para probar la app en desarrollo:
+Para probar la app en desarrollo:
 
 Primero deben ejecutar el archivo "db_dump.sql" en algún cliente de mysql, para reconstruir la base de datos que consume la aplicación.
 
 Para levantar el backend, pueden instalar xampp. En dicho caso, deben copiar la carpeta del proyecto en el directorio 'xampp/htdocs' e iniciar el apache.
 
-Por último, desde la consola, estando posicionado en la carpeta fronted 'xampp/htdocs/heroesApp-V2/frontend', deben ejecutar el siguiente comando:
+Por último, desde la consola, estando posicionado en la carpeta fronted 'xampp/htdocs/heroesApp-V2/frontend', deben ejecutar los siguientes comandos:
+
+
+```
+npm install
+```
 
 ```
 ng serve -o

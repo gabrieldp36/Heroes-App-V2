@@ -122,7 +122,7 @@
             list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
             $decoded = JWT::decode($jwt, JWT_KEY, [JWT_ALG]);
         } catch(Exception $e) {
-            outputError(401, "Token Inválido"); //$e->getMessage(). Para obtener el mensaje de la excepción.
+            outputError(401, "Token Inválido. Inicie sesión nuevamente"); //$e->getMessage(). Para obtener el mensaje de la excepción.
         };
         return $decoded;
     };

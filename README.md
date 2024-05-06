@@ -1,3 +1,5 @@
+![portada](https://github.com/gabrieldp36/Heroes-App-V2/assets/88417383/7c7838fc-e00a-4942-9584-363a64518d96)
+
 # Héroes App V2.
 
 Esta aplicación permite coleccionar tus héroes favoritos de DC-Comics y Marvel-Comics y realizar tus propias creciones, pudiendo escoger en qué editorial afiliarla. La misma fue completamente diseñada con Material Design, Angular Flex Layout y Bootstrap, para brindar al usuario una vista amigable y estilizada de la aplicación, junto con una experencia responsive.
